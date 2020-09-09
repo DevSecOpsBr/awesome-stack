@@ -1,0 +1,84 @@
+#### Global Settings #####
+metricbeat.config.modules:
+  path: ${path.config}/modules.d/*.yml
+  reload.enabled: true
+  relaod.period: 10s
+metricbeat.max_start_delay: 10s
+
+##### Templates #########
+setup.template.settings:
+  index.number_of_shards: 1
+  index.codec: best_compression
+  template.fields: "${path.config}/fields.yml"
+  template.name: "metricbeat"
+  template.pattern: "metricbeat"
+  template.overwrite: false
+
+#### Drop Metrics #####
+# processors:
+#   - drop_metrics:
+
+##### Modules #########
+metricbeat.modules:
+
+- module: system
+  metricsets:
+    - cpu             # CPU usage
+    - filesystem      # File system usage for each mountpoint
+    - fsstat          # File system summary metrics
+    - load            # CPU load averages
+    - memory          # Memory usage
+    - network         # Network IO
+    - process         # Per process metrics
+    - process_summary # Process summary
+    #- core           # Per CPU core usage
+    #- diskio         # Disk IO
+    #- socket         # Sockets and connection info (linux only)
+
+  # Configure the metric types that are included by these metricsets.
+  cpu.metrics:  ["percentages"]  # The other available options are normalized_percentages and ticks.
+  core.metrics: ["percentages"]  # The other available option is ticks.  
+
+  enabled: true
+  period: 10s
+  processes: ['.*']
+  cpu_ticks: false
+  tags: ["servers"]
+
+- module: docker
+  metricsets: ["container", "cpu", "diskio", "healthcheck", "info", "memory", "network"]
+  enabled: true
+  period: 10s
+  hosts: ["unix:///var/run/docker.sock"]
+  tags: ["docker"]
+
+- module: elasticsearch
+  metricsets: ["node", "node_stats"]
+  enabled: true
+  period: 10s
+  hosts: ["elasticsearch:9200"]
+  tags: ["es"]
+
+- module: postgresql
+  metricsets: ["database", "activity","bgwriter"]
+  enabled: true
+  period: 25s
+  hosts: ["postgres://postgres:5432"]
+  username: postgres
+  password: example
+  database: kong
+  tags: ["postgresql"]
+
+- module: prometheus
+  metricsets: ["collector","stats"]
+  enabled: true
+  period: 10s
+  hosts: ["prometheus:9090"]
+  metrics_path: /metrics
+  namespace: example
+  tags: ["prometheus"]
+
+#### Output 
+output.elasticsearch:
+  hosts: ["elasticsearch:9200", "elasticseach2:9200"]
+  # index: "metricbeat"

@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+
+  concourse:
+    image: concourse/concourse
+    command: quickstart
+    privileged: true
+    ports: ["8081:8080"]
+    environment:
+    - CONCOURSE_POSTGRES_HOST=db_postgres
+    - CONCOURSE_POSTGRES_USER=postgres
+    - CONCOURSE_POSTGRES_PASSWORD=example
+    - CONCOURSE_POSTGRES_DATABASE=concourse
+    - CONCOURSE_EXTERNAL_URL
+    - CONCOURSE_BASIC_AUTH_USERNAME
+    - CONCOURSE_BASIC_AUTH_PASSWORD
+    - CONCOURSE_NO_REALLY_I_DONT_WANT_ANY_AUTH=true
+    - CONCOURSE_WORKER_GARDEN_NETWORK
+    networks: 
+      - docker2docker
+
+
+networks: 
+  docker2docker:
+    external: true

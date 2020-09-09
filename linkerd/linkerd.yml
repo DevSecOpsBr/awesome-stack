@@ -1,0 +1,60 @@
+version: '3.6'
+
+services:
+
+# Linked Admin
+  linkerd:
+    image: buoyantio/linkerd:1.3.6
+
+    # metadata to registrator
+    environment:
+        SERVICE_NAME: linkerd
+        SERVICE_TAGS: proxy, load_balancer
+
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    
+    # Deployment information
+    deploy:
+        replicas: 1
+        update_config:
+            parallelism: 2
+            delay: 10s
+        restart_policy:
+            condition: on-failure
+        endpoint_mode: vip
+        labels:
+            com.example.description: "POC"
+        
+    # Resource limits 
+        resources:
+            limits:
+                cpus: '1.0'
+                memory: 1.2G
+            reservations:
+                cpus: '0.50'
+                memory: 800M
+    
+    #  Volumes to bind inside container
+    volumes:
+      - ./config/config.yaml:/config.yaml
+    
+    # Passing config.yaml file as args to docker
+    command: ["/config.yaml"]
+    
+    # mapping ports
+    ports:
+      - 9990:9990
+      - 8080:8080
+      - 4140:4140
+
+    # networking information
+    networks:
+      - docker2docker
+
+# external networks
+networks:
+    docker2docker:
+        external: true

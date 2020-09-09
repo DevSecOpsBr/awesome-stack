@@ -1,0 +1,38 @@
+filebeat.config:
+  prospectors:
+    path: ${path.config}/prospectors.d/*.yml
+    reload.enabled: false
+  modules:
+    path: ${path.config}/modules.d/*.yml
+    reload.enabled: false
+
+filebeat.inputs:
+  - type: docker
+    reload.enabled: true
+    combine_partial: true
+    containers:
+      path: "/var/lib/docker/containers/*/*.log"
+      stream: "stdout"
+      ids:
+        - "*"
+    processors:
+      - add_docker_metadata: ~
+
+
+output.elasticsearch:
+  enabled: true
+  hosts: ['elasticsearch:9200']
+  worker: 2
+  max_retries: 3
+
+output.logstash:
+  enabled: false
+  hosts: ['logstash:5044']
+  worker: 2
+  index: filebeat
+
+setup.kibana:
+  host: "kibana:5601"
+
+http.enabled: true
+http.port: 5066

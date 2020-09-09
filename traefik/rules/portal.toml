@@ -1,0 +1,55 @@
+[backends]
+
+  [backends.portal2]
+    [backends.portal2.circuitbreaker]
+    expression = "NetworkErrorRatio() > 0.8"
+    [backends.portal2.maxconn]
+       amount = 10
+       extractorfunc = "request.host"    
+    [backends.portal2.loadbalancer.stickiness]
+        cookiename = "portal2_cookie"
+    [backends.portal2.healthcheck]
+    path = "/health"
+    interval = "15s"    
+    [backends.portal2.LoadBalancer]
+    method = "drr"
+    [backends.portal2.servers.new]
+    url = "http://portal2"
+    weight = 20
+    [backends.portal2.servers.legacy]
+    url = "http://portal1"
+    weight = 5
+
+    
+[frontends]
+
+  [frontends.portal2]
+  entrypoints = ["http"]
+  backend = "portal2"
+  FrameDeny = true
+  passHostHeader = true
+  passTLSCert = true
+  priority = 10
+    [frontends.portal2.routes.portal2]
+        rule = "HostRegexp:{subdomain:[a-z]+}.ellesmera.com"
+    [frontends.portal2.errors]
+        [frontends.portal2.errors.errorPage0]
+        status = ["500-599"]
+        backend = "error"
+        query = "/{status}.html"
+        [frontends.portal2.errors.errorPage1]
+        status = ["404", "403"]
+        backend = "error"
+        query = "/{status}.html"
+        # ...
+
+    [frontends.portal2.ratelimit]
+        extractorfunc = "client.ip"
+        [frontends.portal2.ratelimit.rateset.rateset1]
+            period = "10s"
+            average = 100
+            burst = 200
+        [frontends.portal2.ratelimit.rateset.rateset2]
+            period = "3s"
+            average = 5
+            burst = 10

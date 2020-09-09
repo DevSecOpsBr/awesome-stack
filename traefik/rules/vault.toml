@@ -1,0 +1,30 @@
+[backends]  
+  [backends.vault]
+    [backends.vault.circuitbreaker]
+    expression = "NetworkErrorRatio() > 0.3"
+    [backends.vault.maxconn]
+       amount = 10
+       extractorfunc = "request.host"    
+    [backends.vault.loadbalancer.stickiness]
+        cookiename = "vault_cookie"
+    [backends.vault.healthcheck]
+    path = "/health"
+    interval = "10s"    
+    [backends.vault.LoadBalancer]
+    method = "drr"
+    [backends.vault.servers.new]
+    url = "http://vault_server"
+    weight = 5
+
+
+
+[frontends]
+  [frontends.vault]
+  entrypoints = ["http"]  
+  backend = "vaultsrv"
+  FrameDeny = true
+  passHostHeader = true
+  passTLSCert = true
+  priority = 20
+    [frontends.vault.routes.server_1]
+      rule = "Host:vault.ellesmera.com"

@@ -1,29 +1,9 @@
-# README #
+# Docker
 
-This README would normally document whatever steps are necessary to get your application up and running.
 
-### What is this repository for? ###
+#### Welcome to my repository
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+Here you'll find some Docker Compose files to use in a production environment Docker Swarm Cluster
 
-### How do I get set up? ###
+The main goal is show the best practices and try create a stable and realiable environment that we can.
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
-
-### Contribution guidelines ###
-
-* Writing tests
-* Code review
-* Other guidelines
-
-### Who do I talk to? ###
-
-* Repo owner or admin
-* Other community or team contact

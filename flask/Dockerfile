@@ -4,8 +4,8 @@ FROM alpine:${code_version}
 
 # Additional information
 LABEL maintainer="Rodrigo Carvalho <rdgacarvalho@gmail.com>"
-LABEL version="1.0.2"
-LABEL environment="test"
+LABEL version="1.0.3"
+LABEL environment="dev"
 
 RUN apk update apk && \
  apk add python3 py3-pip curl wget

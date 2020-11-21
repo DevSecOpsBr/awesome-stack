@@ -10,7 +10,7 @@ LABEL environment="dev"
 RUN apk update apk && \
  apk add python3 py3-pip curl wget
 
-RUN pip3 install Flask jaeger-client awscli
+RUN pip3 install Flask jaeger-client awscli reckoner
 
 # Ports to be open
 EXPOSE 5000

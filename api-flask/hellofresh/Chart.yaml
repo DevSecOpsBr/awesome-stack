@@ -1,0 +1,9 @@
+apiVersion: v2
+name: hellofresh
+description: A Helm chart for Kubernetes
+maintainers:
+- name: Rodrigo Carvalho
+  email: rdgacarvalho@gmail.com
+type: application
+version: 1.0.0
+appVersion: 1.0.0

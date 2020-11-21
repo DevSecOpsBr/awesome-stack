@@ -1,0 +1,85 @@
+replicaCount: 1
+
+image:
+  repository: hellofresh
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart version.
+  tag: "latest"
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: true
+  annotations: {}
+  name: "hellofresh"
+
+annotations:
+  keel.sh/policy: major         # update policy (available: patch, minor, major, all, force)
+  keel.sh/trigger: poll         # enable active repository checking (webhooks and GCR would still work)
+  keel.sh/approvals: "0"        # required approvals to update
+  keel.sh/match-tag: "true"     # only makes a difference when used with 'force' policy, will only update if tag matches :dev->:dev, :prod->:prod 
+  keel.sh/notify: chan1,chan2   # chat channels to sent notification to
+  keel.sh/pollSchedule: "@every 10m"
+
+podAnnotations: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+
+service:
+  type: ClusterIP
+  port: 5000
+
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    external-dns.alpha.kubernetes.io/alias: "true"
+    external-dns.alpha.kubernetes.io/hostname: api.hellofresh.minikube
+
+  hosts:
+    - host: api.hellofresh.minikube
+      paths: 
+        - /
+  tls: []
+  #    hosts:
+  #      - chart-example.local
+
+resources:
+  requests:
+    cpu: 50m
+    memory: 64Mi
+  limits:
+    cpu: 100m
+    memory: 128Mi
+
+readinessProbeDelay: {}
+  # httpGet:
+  #   path: /
+  #   port: http
+  # initialDelaySeconds: 30
+  # periodSeconds: 10
+
+livenessProbeDelay: {}
+  # httpGet:
+  #   path: /
+  #   port: http
+  # initialDelaySeconds: 30
+  # periodSeconds: 15
+
+autoscaling:
+  enabled: true
+  minReplicas: 1
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}

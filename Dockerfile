@@ -16,7 +16,7 @@ RUN pip install Flask jaeger-client
 EXPOSE 5000
 
 # Copying frontend assets
-COPY app /app
+# COPY app /app
 
 ENV FLASK_APP=/app/api.py
 ENV FLASK_ENV=production

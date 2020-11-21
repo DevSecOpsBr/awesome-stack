@@ -4,7 +4,7 @@ FROM alpine:${code_version}
 
 # Additional information
 LABEL maintainer="Rodrigo Carvalho <rdgacarvalho@gmail.com>"
-LABEL version="1.0.4"
+LABEL version="1.0.5"
 LABEL environment="dev"
 
 RUN apk update apk && \

@@ -1,4 +1,4 @@
-FROM concourse/concourse-ci
+FROM concourse/concourse
 #https://github.com/concourse/concourse/blob/master/ci/dockerfiles/concourse-ci/Dockerfile
 
 # Additional information

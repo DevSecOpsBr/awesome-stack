@@ -1,6 +1,11 @@
 FROM concourse/concourse-ci
 #https://github.com/concourse/concourse/blob/master/ci/dockerfiles/concourse-ci/Dockerfile
 
+# Additional information
+LABEL maintainer="Rodrigo Carvalho <rdgacarvalho@gmail.com>"
+LABEL version="1.0.1"
+LABEL environment="dev"
+
 RUN apt-get update && apt-get install curl wget bzr screen -y
 
 ADD http://stedolan.github.io/jq/download/linux64/jq /usr/bin/

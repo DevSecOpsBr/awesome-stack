@@ -1,0 +1,10 @@
+image: alpine
+
+pipelines:
+  docker:
+    - step:
+        script:
+          - echo "Docker HUB authentication"
+          - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+options:
+  docker: true

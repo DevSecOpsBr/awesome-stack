@@ -3,10 +3,11 @@ image: alpine
 pipelines:
   default:
     - step:
-        login:
+        script:
           - echo "Docker HUB authentication"
           - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-        build:
+    - step:
+        script:
           - echo "Building image..."
 options:
   docker: true

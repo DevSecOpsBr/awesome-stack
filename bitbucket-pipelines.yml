@@ -7,7 +7,7 @@ pipelines:
         script:
         - pipe: atlassian/opsgenie-send-alert:0.5.3
           variables:
-            GENIE_KEY: $GENIE_KEY
+            GENIE_KEY: $API_KEY
             MESSAGE: 'Bitbucket Pipeline Started.'
             DESCRIPTION: 'An Opsgenie alert sent from Bitbucket Pipelines'
             SOURCE: 'Bitbucket Pipelines'

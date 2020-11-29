@@ -3,7 +3,7 @@ image: alpine
 pipelines:
   default:
     - step:
-        name: "opsgenie-docker-building"
+        name: "Opsgenie Docker Build"
         script:
         - pipe: atlassian/opsgenie-send-alert:0.5.3
           variables:

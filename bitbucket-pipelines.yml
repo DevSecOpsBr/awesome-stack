@@ -3,59 +3,16 @@ image: alpine
 pipelines:
   default:
     - step:
-        name: "Opsgenie Docker Build"
+        name: "Slack notification"
         script:
-        - pipe: atlassian/opsgenie-send-alert:0.5.3
-          variables:
-            GENIE_KEY: $API_KEY
-            MESSAGE: 'Bitbucket Pipeline Started.'
-            DESCRIPTION: 'An Opsgenie alert sent from Bitbucket Pipelines'
-            SOURCE: 'Bitbucket Pipelines'
-            PRIORITY: 'P1'
+          - pipe: atlassian/slack-notify:1.0.0
+            variables:
+              WEBHOOK_URL: $WEBHOOK_URL
+              MESSAGE: 'Hello, world!'
     - step:
         name: "Docker HUB Authentication"
         script:
           - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-    # - step:
-    #     services:
-    #     - docker
-    #     name: "docker-pipe-example"
-    #     script:
-    #     - docker build -t soldev-art-docker.jfrog.team/docker-pipe-example:$BITBUCKET_BUILD_NUMBER .
-    #     # Build and publish Docker image to Artifactory
-    #     - pipe: JfrogDev/artifactory-docker:0.2.12
-    #       variables:
-    #         ARTIFACTORY_URL: $ARTIFACTORY_URL
-    #         ARTIFACTORY_USER: $ARTIFACTORY_USER
-    #         ARTIFACTORY_PASSWORD: $ARTIFACTORY_PASSWORD
-    #         DOCKER_IMAGE_TAG: "soldev-art-docker.jfrog.team/docker-pipe-example:${BITBUCKET_BUILD_NUMBER}"
-    #         DOCKER_TARGET_REPO: "docker-stage-local"
-    #         FOLDER: "docker"
-    #         BUILD_NAME: "docker-pipe-example"
-    #     # Scan published build through Xray
-    #     - pipe: JfrogDev/artifactory-xray-scan:0.2.7
-    #       variables:
-    #         ARTIFACTORY_URL: $ARTIFACTORY_URL
-    #         ARTIFACTORY_USER: $ARTIFACTORY_USER
-    #         ARTIFACTORY_PASSWORD: $ARTIFACTORY_PASSWORD
-    #         BUILD_NAME: "docker-pipe-example"
-    #     # Promote Build in Artifactory
-    #     - pipe: JfrogDev/artifactory-build-promotion:0.2.10
-    #       variables:
-    #         ARTIFACTORY_URL: $ARTIFACTORY_URL
-    #         ARTIFACTORY_USER: $ARTIFACTORY_USER
-    #         ARTIFACTORY_PASSWORD: $ARTIFACTORY_PASSWORD
-    #         TARGET_REPO: "docker-prod-local"
-    #         STATUS: "Staged"
-    #         BUILD_NAME: "docker-pipe-example"
-    #     # Promote Build in Artifactory
-    #     - pipe: JfrogDev/artifactory-build-promotion:0.2.10
-    #       variables:
-    #         ARTIFACTORY_URL: $ARTIFACTORY_URL
-    #         ARTIFACTORY_USER: $ARTIFACTORY_USER
-    #         ARTIFACTORY_PASSWORD: $ARTIFACTORY_PASSWORD
-    #         TARGET_REPO: "docker-prod-local"
-    #         STATUS: "Promoted"
-    #         BUILD_NAME: "docker-pipe-example"
+    
 options:
   docker: true

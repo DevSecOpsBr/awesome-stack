@@ -26,11 +26,10 @@ services:
         constraints: [node.role == manager]
       labels:
         - "traefik.enable=true"
-        - "traefik.tcp.routers.mytcprouter.entrypoints=web"
-        - "traefik.tcp.routers.mytcprouter.service=portainer"
+        - "traefik.tcp.routers.portainer.entrypoints=web"
         - "traefik.tcp.routers.portainer.rule=HostSNI(`portainer-ui.local`)"
-        - "traefik.tcp.services.portainer.loadbalancer.server.port=9000"
-        - "traefik.tcp.services.portainer-agent.loadbalancer.server.port=9001"
+        - "traefik.tcp.services.portainer-ui.loadbalancer.server.port=9000"
+        - "traefik.tcp.services.portainer.loadbalancer.server.port=8000"
     networks:
       - docker2docker
     volumes:

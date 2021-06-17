@@ -1,18 +1,6 @@
 jobs:
-- name: hello-world-job
+- name: deploy_minikube_cluster
   plan:
-  - task: hello-world-task
+  - task: cluster_name
     config:
-      platform: linux
-      image_resource:
-        type: registry-image
-        source:
-          repository: busybox
-      # Add "the-artifact" to our task
-      outputs:
-      - name: the-artifact
-      run:
-        # Change the command to `ls -lF` to see
-        # what the task sees in its working directory
-        path: ls
-        args: ["-lF"]
+

@@ -1,4 +1,4 @@
-version: '3.3'
+version: '3.6'
 
 services:
 
@@ -13,18 +13,21 @@ services:
       - "SERVICE_IGNORE=false"      
       - "traefik.enable=false"   
     command:
-      - "--api=true"
-      - "--api.debug=true"
-      - "--accesslog=true"
-      - "--api.insecure=true"
-      - "--providers.docker=true"
-      - "--providers.docker.swarmmode=true"
-      - "--providers.docker.network=docker2docker"
-      - "--providers.docker.watch=true"
-      - "--providers.file.debugloggeneratedtemplate=true"
-      - "--providers.file.watch=true"
-      - "--metrics.prometheus=true"
-      - "--tracing.jaeger=true"
+      - --api=true
+      - --api.debug=true
+      - --accesslog=true
+      - --api.insecure=true
+      - --providers.docker=true
+      - --providers.docker.swarmmode=true
+      - --providers.docker.network=docker2docker
+      - --providers.docker.watch=true
+      - --providers.file.debugloggeneratedtemplate=true
+      - --providers.file.watch=true
+      - --metrics.prometheus=true
+      - --tracing.jaeger=true
+      - --entryPoints.web.address=:80
+      - --entryPoints.websecure.address=:443
+      - --providers.consul.endpoints=consul_server_bootstrap:8500
     deploy:
       mode: replicated
       replicas: 1

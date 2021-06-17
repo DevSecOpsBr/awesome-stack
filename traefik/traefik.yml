@@ -16,6 +16,7 @@ services:
       - --api=true
       - --api.debug=true
       - --accesslog=true
+      - --ping=true
       - --api.insecure=true
       - --providers.docker=true
       - --providers.docker.swarmmode=true
@@ -27,6 +28,8 @@ services:
       - --tracing.jaeger=true
       - --entryPoints.web.address=:80
       - --entryPoints.websecure.address=:443
+      - --entryPoints.ping.address=:8082
+      - --ping.entryPoint=ping
       - --providers.consul.endpoints=consul_server_bootstrap:8500
     deploy:
       mode: replicated

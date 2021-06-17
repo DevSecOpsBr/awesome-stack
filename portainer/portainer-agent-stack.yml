@@ -6,12 +6,12 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /var/lib/docker/volumes:/var/lib/docker/volumes
-    networks:
-      - agent_network
     deploy:
       mode: global
       placement:
         constraints: [node.platform.os == linux]
+    networks:
+      - docker2docker
 
   portainer:
     image: portainer/portainer-ce
@@ -19,20 +19,26 @@ services:
     ports:
       - "9000:9000"
       - "8000:8000"
-    volumes:
-      - portainer_data:/data
-    networks:
-      - agent_network
     deploy:
       mode: replicated
       replicas: 1
       placement:
         constraints: [node.role == manager]
+      labels:
+        - "traefik.enable=true"
+        - "traefik.tcp.routers.mytcprouter.entrypoints=web"
+        - "traefik.tcp.routers.mytcprouter.service=portainer"
+        - "traefik.tcp.routers.portainer.rule=HostSNI(`portainer-ui.local`)"
+        - "traefik.tcp.services.portainer.loadbalancer.server.port=9000"
+        - "traefik.tcp.services.portainer-agent.loadbalancer.server.port=9001"
+    networks:
+      - docker2docker
+    volumes:
+      - portainer_data:/data
 
 networks:
-  agent_network:
-    driver: overlay
-    attachable: true
+  docker2docker:
+    external: true
 
 volumes:
   portainer_data:

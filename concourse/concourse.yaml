@@ -1,0 +1,54 @@
+version: '3.6'
+
+services:
+  concourse-db:
+    image: postgres
+    environment:
+      POSTGRES_DB: concourse
+      POSTGRES_PASSWORD: concourse_pass
+      POSTGRES_USER: concourse_user
+      PGDATA: /database
+    networks:
+      - docker2docker
+
+  concourse:
+    image: concourse/concourse
+    command: quickstart
+    privileged: true
+    depends_on: [concourse-db]
+    ports: ["8080:8080"]
+    environment:
+      CONCOURSE_POSTGRES_HOST: concourse-db
+      CONCOURSE_POSTGRES_USER: concourse_user
+      CONCOURSE_POSTGRES_PASSWORD: concourse_pass
+      CONCOURSE_POSTGRES_DATABASE: concourse
+      CONCOURSE_EXTERNAL_URL: http://localhost:8080
+      # echo "admin" | openssl base64 | docker secret create \
+      #  -l env=test -l system=concourse -l team=devops concourseci_secret -
+      CONCOURSE_ADD_LOCAL_USER: test:test
+      CONCOURSE_MAIN_TEAM_LOCAL_USER: test
+      # instead of relying on the default "detect"
+      CONCOURSE_WORKER_BAGGAGECLAIM_DRIVER: overlay
+      # docker puts the dns server at 127.0.0.*, which cannot be accessed by the containerd containers
+      CONCOURSE_WORKER_CONTAINERD_DNS_PROXY_ENABLE: "true"
+      CONCOURSE_CLIENT_SECRET: Y29uY291cnNlLXdlYgo=
+      CONCOURSE_TSA_CLIENT_SECRET: Y29uY291cnNlLXdvcmtlcgo=
+      CONCOURSE_X_FRAME_OPTIONS: allow
+      CONCOURSE_CLUSTER_NAME: swarm
+      USER_PASSWORD: $$cat /run/secrets/concourseci_secret
+      USER_PASSWD: concourseci_secret
+    secrets:
+      - concourseci_secret
+      - ci_secret
+    networks:
+      - docker2docker
+
+secrets:
+  ci_secret:
+    external: true
+  concourseci_secret:
+    external: true
+
+networks:
+    docker2docker:
+        external: true

@@ -1,0 +1,18 @@
+jobs:
+- name: hello-world-job
+  plan:
+  - task: hello-world-task
+    config:
+      platform: linux
+      image_resource:
+        type: registry-image
+        source:
+          repository: busybox
+      # Add "the-artifact" to our task
+      outputs:
+      - name: the-artifact
+      run:
+        # Change the command to `ls -lF` to see
+        # what the task sees in its working directory
+        path: ls
+        args: ["-lF"]

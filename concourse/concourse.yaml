@@ -1,7 +1,7 @@
 version: '3.9'
 
 services:
-  concourse-db:
+  db:
     image: postgres
     deploy:
       mode: replicated
@@ -25,23 +25,34 @@ services:
     networks:
       - docker2docker
 
-  concourse:
+  web:
     image: concourse/concourse
+    environment:
+      CONCOURSE_POSTGRES_HOST: db
+      CONCOURSE_POSTGRES_USER: concourse_user
+      CONCOURSE_POSTGRES_PASSWORD: concourse_pass
+      CONCOURSE_POSTGRES_DATABASE: concourse
+      CONCOURSE_EXTERNAL_URL: http://concourseci.local
+      # echo "admin" | openssl base64 | docker secret create -l env=test -l system=concourse -l team=devops concourseci_secret -
+      CONCOURSE_CLUSTER_NAME: swarm
+      CONCOURSE_ADD_LOCAL_USER: admin:admin
+      CONCOURSE_MAIN_TEAM_LOCAL_USER: DevSecOps
+      # instead of relying on the default "detect"
+      CONCOURSE_WORKER_BAGGAGECLAIM_DRIVER: overlay
     deploy:
-      mode: replicated
       labels:
         - "traefik.enable=true"
         - "traefik.docker.network=docker2docker"
         - "traefik.docker.lbswarm=true"
         - "traefik.http.routers.concourse.entrypoints=web"
         - traefik.http.routers.concourse.rule=Host(`concourseci.local`)
-        # Tell Traefik to use the port 12345 to connect to `my-container`
         - traefik.http.services.concourse.loadbalancer.server.port=8080
+      mode: replicated
       replicas: 1
       placement:
         max_replicas_per_node: 1
       update_config:
-        parallelism: 2
+        parallelism: 1
         delay: 10s
       restart_policy:
         condition: on-failure
@@ -50,35 +61,46 @@ services:
           cpus: '0.25'
           memory: 20M
     privileged: true
-    command: quickstart
+    command: web
     expose:
       - 8080
-    environment:
-      CONCOURSE_POSTGRES_HOST: concourse-db
-      CONCOURSE_POSTGRES_USER: concourse_user
-      CONCOURSE_POSTGRES_PASSWORD: concourse_pass
-      CONCOURSE_POSTGRES_DATABASE: concourse
-      CONCOURSE_EXTERNAL_URL: http://concourseci.local
-      # echo "admin" | openssl base64 | docker secret create \
-      #  -l env=test -l system=concourse -l team=devops concourseci_secret -
-      CONCOURSE_CLUSTER_NAME: swarm
-      CONCOURSE_ADD_LOCAL_USER: admin:admin
-      CONCOURSE_MAIN_TEAM_LOCAL_USER: DevSecOps
-      # instead of relying on the default "detect"
-      CONCOURSE_WORKER_BAGGAGECLAIM_DRIVER: overlay
-      # docker puts the dns server at 127.0.0.*, which cannot be accessed by the containerd containers
-      CONCOURSE_WORKER_CONTAINERD_DNS_PROXY_ENABLE: "true"
-      CONCOURSE_CLIENT_SECRET: Y29uY291cnNlLXdlYgo=
-      CONCOURSE_TSA_CLIENT_SECRET: Y29uY291cnNlLXdvcmtlcgo=
-      CONCOURSE_X_FRAME_OPTIONS: allow
     logging:
       driver: "json-file"
       options:
         max-size: "200k"
         max-file: "10"
-    secrets:
-      - concourseci_secret
-      - ci_secret
+    volumes: 
+      - ./keys/web:/concourse-keys
+    networks:
+      - docker2docker
+
+  worker:
+    image: concourse/concourse
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+      resources:
+        reservations:
+          cpus: '0.25'
+          memory: 20M
+    command: worker
+    privileged: true
+    links: [web]
+    stop_signal: SIGUSR2
+    environment:
+      CONCOURSE_TSA_HOST: web:2222
+      CONCOURSE_CONTAINERD_DNS_PROXY_ENABLE: "true"
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "5"
+        max-size: "10m"
+    volumes: 
+      - ./keys/worker:/concourse-keys
     networks:
       - docker2docker
 

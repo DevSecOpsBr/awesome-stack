@@ -5,7 +5,7 @@ services:
   clients:
     image: consul:latest
     labels:
-      - "SERVICE_IGNORE=true"        
+      - "SERVICE_IGNORE=false"
       - "traefik.enable=true"
       - "traefik.port=8500"
       - "traefik.backend=consul_clients"
@@ -13,7 +13,7 @@ services:
       - "traefik.weight=5"
       - "traefik.backend.loadbalancer.method=drr"
       - "traefik.backend.loadbalancer.stickiness=true"
-      - "traefik.frontend.rule=Host:clients.ellesmera.com"
+      - "traefik.frontend.rule=Host:consul.clients.local"
       - "traefik.backend.loadbalancer.stickiness.cookieName=consulc_cookie"      
     command: "agent -retry-join server_bootstrap"
     depends_on:
@@ -40,7 +40,7 @@ services:
   servers:
     image: consul:latest
     labels:
-      - "SERVICE_IGNORE=true"        
+      - "SERVICE_IGNORE=false"
       - "traefik.enable=true"
       - "traefik.port=8500"
       - "traefik.backend=consul_servers"
@@ -48,7 +48,7 @@ services:
       - "traefik.weight=5"
       - "traefik.backend.loadbalancer.method=drr"
       - "traefik.backend.loadbalancer.stickiness=true"
-      - "traefik.frontend.rule=Host:servers.ellesmera.com"
+      - "traefik.frontend.rule=Host:consul.servers.local"
       - "traefik.backend.loadbalancer.stickiness.cookieName=consuls_cookie"
     command: "agent -server -retry-join server_bootstrap"
     depends_on:
@@ -79,15 +79,15 @@ services:
       CONSUL_UI_BETA: "true"
     working_dir: /consul/config/
     labels:
-      - "SERVICE_IGNORE=true"          
+      - "SERVICE_IGNORE=false"
       - "traefik.enable=true"
       - "traefik.port=8500"
-      - "traefik.backend=consul_bootstrap"
+      - "traefik.backend=consul_server_bootstrap"
       - "traefik.tags=green"
       - "traefik.weight=5"
       - "traefik.backend.loadbalancer.method=drr"
       - "traefik.backend.loadbalancer.stickiness=true"
-      - "traefik.frontend.rule=Host:consul.ellesmera.com"
+      - "traefik.frontend.rule=Host:consul.bootstrap.local"
       - "traefik.backend.loadbalancer.stickiness.cookieName=consuls_cookie"
     command: "agent -server"
     volumes:

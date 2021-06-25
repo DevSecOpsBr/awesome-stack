@@ -64,7 +64,7 @@ services:
     networks:
       - docker2docker
     volumes:
-      - ./configs/database:/data/teamcity_server/datadir
+      - ./configs/database/datadir:/data/teamcity_server/datadir
       - logs:/opt/teamcity/logs
 
   agent:

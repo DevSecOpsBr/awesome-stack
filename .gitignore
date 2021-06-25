@@ -50,3 +50,6 @@ Thumbs.db
 
 # Concourse keys
 keys/
+
+# TeamCity
+teamcity/configs/database/datadir

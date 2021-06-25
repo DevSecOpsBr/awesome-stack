@@ -1,0 +1,131 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>FailureConditions - </title>
+<link rel="stylesheet" href="../../style.css">
+</HEAD>
+<BODY>
+<a href="../index.html">jetbrains.buildServer.configs.kotlin.v10</a>&nbsp;/&nbsp;<a href="./index.html">FailureConditions</a><br/>
+<br/>
+<h1>FailureConditions</h1>
+<code><span class="keyword">class </span><span class="identifier">FailureConditions</span></code>
+<p>Collection of <a href="../-failure-condition/index.html">failure conditions</a> in <a href="../-build-type/index.html">build configuration</a>
+or <a href="../-template/index.html">template</a></p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="identifier">FailureConditions</span><span class="symbol">(</span><span class="identifier" id="jetbrains.buildServer.configs.kotlin.v10.FailureConditions$<init>(jetbrains.buildServer.configs.kotlin.v10.FailureConditions, kotlin.Function1((jetbrains.buildServer.configs.kotlin.v10.FailureConditions, kotlin.Unit)))/base">base</span><span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">FailureConditions</span></a><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">, </span><span class="identifier" id="jetbrains.buildServer.configs.kotlin.v10.FailureConditions$<init>(jetbrains.buildServer.configs.kotlin.v10.FailureConditions, kotlin.Function1((jetbrains.buildServer.configs.kotlin.v10.FailureConditions, kotlin.Unit)))/init">init</span><span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">FailureConditions</span></a><span class="symbol">.</span><span class="symbol">(</span><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a>&nbsp;<span class="symbol">=</span>&nbsp;{}<span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="error-message.html">errorMessage</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">errorMessage</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">?</span></code>
+<p>If true, build will fail if any error message is received from logger.
+By default false.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="execution-timeout-min.html">executionTimeoutMin</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">executionTimeoutMin</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">?</span></code>
+<p>Allows to set max build execution time in minutes. If this threshold is exceeded, build fails.
+Default value is 0 - means there is no limit in build execution time</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="java-crash.html">javaCrash</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">javaCrash</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">?</span></code>
+<p>If true then build will be marked as failed if out of memory error or process crash is detected.
+By default true.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="non-zero-exit-code.html">nonZeroExitCode</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">nonZeroExitCode</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">?</span></code>
+<p>If true, build will fail if build process exit code was non-zero.
+By default true.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="support-test-retry.html">supportTestRetry</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">supportTestRetry</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">?</span></code>
+<p>If true, successful test runs of the same test will mute previous test failure in the same build
+By default false.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="test-failure.html">testFailure</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">testFailure</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">?</span></code>
+<p>If true, build will fail if there is at least one failed test.
+By default true.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="failure-condition.html">failureCondition</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">failureCondition</span><span class="symbol">(</span><span class="identifier" id="jetbrains.buildServer.configs.kotlin.v10.FailureConditions$failureCondition(jetbrains.buildServer.configs.kotlin.v10.FailureCondition)/failureCondition">failureCondition</span><span class="symbol">:</span>&nbsp;<a href="../-failure-condition/index.html"><span class="identifier">FailureCondition</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Adds the specified failure condition</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Extension Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="../../jetbrains.build-server.configs.kotlin.v10.failure-conditions/fail-on-metric-change.html">failOnMetricChange</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><a href="./index.html"><span class="identifier">FailureConditions</span></a><span class="symbol">.</span><span class="identifier">failOnMetricChange</span><span class="symbol">(</span><span class="identifier" id="jetbrains.buildServer.configs.kotlin.v10.failureConditions$failOnMetricChange(jetbrains.buildServer.configs.kotlin.v10.FailureConditions, jetbrains.buildServer.configs.kotlin.v10.failureConditions.BuildFailureOnMetric, kotlin.Function1((jetbrains.buildServer.configs.kotlin.v10.failureConditions.BuildFailureOnMetric, kotlin.Unit)))/base">base</span><span class="symbol">:</span>&nbsp;<a href="../../jetbrains.build-server.configs.kotlin.v10.failure-conditions/-build-failure-on-metric/index.html"><span class="identifier">BuildFailureOnMetric</span></a><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">, </span><span class="identifier" id="jetbrains.buildServer.configs.kotlin.v10.failureConditions$failOnMetricChange(jetbrains.buildServer.configs.kotlin.v10.FailureConditions, jetbrains.buildServer.configs.kotlin.v10.failureConditions.BuildFailureOnMetric, kotlin.Function1((jetbrains.buildServer.configs.kotlin.v10.failureConditions.BuildFailureOnMetric, kotlin.Unit)))/init">init</span><span class="symbol">:</span>&nbsp;<a href="../../jetbrains.build-server.configs.kotlin.v10.failure-conditions/-build-failure-on-metric/index.html"><span class="identifier">BuildFailureOnMetric</span></a><span class="symbol">.</span><span class="symbol">(</span><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a>&nbsp;<span class="symbol">=</span>&nbsp;{}<span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Adds a <a href="https://www.jetbrains.com/help/teamcity/?Build+Failure+Conditions#BuildFailureConditions-Failbuildonmetricchange">build failure condition</a>
+failing build on metric change.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../jetbrains.build-server.configs.kotlin.v10.failure-conditions/fail-on-text.html">failOnText</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><a href="./index.html"><span class="identifier">FailureConditions</span></a><span class="symbol">.</span><span class="identifier">failOnText</span><span class="symbol">(</span><span class="identifier" id="jetbrains.buildServer.configs.kotlin.v10.failureConditions$failOnText(jetbrains.buildServer.configs.kotlin.v10.FailureConditions, jetbrains.buildServer.configs.kotlin.v10.failureConditions.BuildFailureOnText, kotlin.Function1((jetbrains.buildServer.configs.kotlin.v10.failureConditions.BuildFailureOnText, kotlin.Unit)))/base">base</span><span class="symbol">:</span>&nbsp;<a href="../../jetbrains.build-server.configs.kotlin.v10.failure-conditions/-build-failure-on-text/index.html"><span class="identifier">BuildFailureOnText</span></a><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">, </span><span class="identifier" id="jetbrains.buildServer.configs.kotlin.v10.failureConditions$failOnText(jetbrains.buildServer.configs.kotlin.v10.FailureConditions, jetbrains.buildServer.configs.kotlin.v10.failureConditions.BuildFailureOnText, kotlin.Function1((jetbrains.buildServer.configs.kotlin.v10.failureConditions.BuildFailureOnText, kotlin.Unit)))/init">init</span><span class="symbol">:</span>&nbsp;<a href="../../jetbrains.build-server.configs.kotlin.v10.failure-conditions/-build-failure-on-text/index.html"><span class="identifier">BuildFailureOnText</span></a><span class="symbol">.</span><span class="symbol">(</span><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a>&nbsp;<span class="symbol">=</span>&nbsp;{}<span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Adds a <a href="https://www.jetbrains.com/help/teamcity/?Build+Failure+Conditions#BuildFailureConditions-Failbuildonspecifictextinbuildlog">build failure condition</a> failing build
+when specified text is found in a build log.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

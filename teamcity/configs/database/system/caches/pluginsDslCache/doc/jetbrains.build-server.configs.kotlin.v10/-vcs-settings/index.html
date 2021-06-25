@@ -1,0 +1,123 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>VcsSettings - </title>
+<link rel="stylesheet" href="../../style.css">
+</HEAD>
+<BODY>
+<a href="../index.html">jetbrains.buildServer.configs.kotlin.v10</a>&nbsp;/&nbsp;<a href="./index.html">VcsSettings</a><br/>
+<br/>
+<h1>VcsSettings</h1>
+<code><span class="keyword">class </span><span class="identifier">VcsSettings</span></code>
+<p>Contains settings from the <a href="https://www.jetbrains.com/help/teamcity/?Configuring+VCS+Settings">Version Control Settings</a>
+tab of <a href="../-build-type/index.html">build configuration</a> or <a href="../-template/index.html">template</a>.</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="identifier">VcsSettings</span><span class="symbol">(</span><span class="identifier" id="jetbrains.buildServer.configs.kotlin.v10.VcsSettings$<init>(jetbrains.buildServer.configs.kotlin.v10.VcsSettings, kotlin.Function1((jetbrains.buildServer.configs.kotlin.v10.VcsSettings, kotlin.Unit)))/base">base</span><span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">VcsSettings</span></a><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">, </span><span class="identifier" id="jetbrains.buildServer.configs.kotlin.v10.VcsSettings$<init>(jetbrains.buildServer.configs.kotlin.v10.VcsSettings, kotlin.Function1((jetbrains.buildServer.configs.kotlin.v10.VcsSettings, kotlin.Unit)))/init">init</span><span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">VcsSettings</span></a><span class="symbol">.</span><span class="symbol">(</span><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a>&nbsp;<span class="symbol">=</span>&nbsp;{}<span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="branch-filter.html">branchFilter</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">branchFilter</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span></code>
+<p>Defines branch filter to be used for branches coming from snapshot dependencies.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="build-default-branch.html">buildDefaultBranch</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><s><span class="identifier">buildDefaultBranch</span></s><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">?</span></code>
+<p>Whether builds in the default branch are allowed and the default branch is shown in UI.
+By default true.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="checkout-dir.html">checkoutDir</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">checkoutDir</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span></code>
+<p>Custom build checkout directory. By default empty, ie. build uses default checkout directory.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="checkout-mode.html">checkoutMode</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">checkoutMode</span><span class="symbol">: </span><a href="../-checkout-mode/index.html"><span class="identifier">CheckoutMode</span></a><span class="symbol">?</span></code>
+<p>Defines a preferred <a href="https://www.jetbrains.com/help/teamcity/?VCS+Checkout+Mode">checkout mode</a> for the build.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="clean-checkout.html">cleanCheckout</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">cleanCheckout</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">?</span></code>
+<p>If true, all files in build's working directory will be
+deleted before the build is started. By default false.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="exclude-default-branch-changes.html">excludeDefaultBranchChanges</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">excludeDefaultBranchChanges</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">?</span></code>
+<p>Whether changes reachable from the default branch should be excluded from other branches.
+By default false.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="show-dependencies-changes.html">showDependenciesChanges</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">showDependenciesChanges</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">?</span></code>
+<p>If true, build will include snapshot dependencies changes when reporting changes on UI.
+By default false</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="plus.html">plus</a></p>
+</td>
+<td>
+<code><span class="keyword">operator</span> <span class="keyword">fun </span><span class="identifier">plus</span><span class="symbol">(</span><span class="identifier" id="jetbrains.buildServer.configs.kotlin.v10.VcsSettings$plus(jetbrains.buildServer.configs.kotlin.v10.VcsSettings)/other">other</span><span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">VcsSettings</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">VcsSettings</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="root.html">root</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">root</span><span class="symbol">(</span><span class="identifier" id="jetbrains.buildServer.configs.kotlin.v10.VcsSettings$root(jetbrains.buildServer.configs.kotlin.v10.VcsRoot, kotlin.Array((kotlin.String)))/root">root</span><span class="symbol">:</span>&nbsp;<a href="../-vcs-root/index.html"><span class="identifier">VcsRoot</span></a><span class="symbol">, </span><span class="keyword">vararg</span> <span class="identifier" id="jetbrains.buildServer.configs.kotlin.v10.VcsSettings$root(jetbrains.buildServer.configs.kotlin.v10.VcsRoot, kotlin.Array((kotlin.String)))/rules">rules</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Attaches the specified VCS root with the given checkout rules to a template or buildType</p>
+<code><span class="keyword">fun </span><span class="identifier">root</span><span class="symbol">(</span><span class="identifier" id="jetbrains.buildServer.configs.kotlin.v10.VcsSettings$root(kotlin.String, kotlin.Array((kotlin.String)))/rootExtId">rootExtId</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="keyword">vararg</span> <span class="identifier" id="jetbrains.buildServer.configs.kotlin.v10.VcsSettings$root(kotlin.String, kotlin.Array((kotlin.String)))/rules">rules</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Attaches a VCS root with the specified extId with the given checkout rules to a template or buildType.
+This method can be used to attach a VCS root which is not defined in Kotlin.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

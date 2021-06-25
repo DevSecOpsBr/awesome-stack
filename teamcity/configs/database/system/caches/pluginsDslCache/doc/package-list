@@ -1,0 +1,43 @@
+$dokka.format:html
+$dokka.linkExtension:html
+$dokka.location:jetbrains.buildServer.configs.kotlin.v10$toExtId(kotlin.String, kotlin.String)jetbrains.build-server.configs.kotlin.v10/kotlin.-string/to-ext-id.html
+$dokka.location:jetbrains.buildServer.configs.kotlin.v2017_2$toExtId(kotlin.String, kotlin.String)jetbrains.build-server.configs.kotlin.v2017_2/kotlin.-string/to-ext-id.html
+$dokka.location:jetbrains.buildServer.configs.kotlin.v2017_2$toId(kotlin.String, kotlin.String)jetbrains.build-server.configs.kotlin.v2017_2/kotlin.-string/to-id.html
+$dokka.location:jetbrains.buildServer.configs.kotlin.v2018_1$toId(kotlin.String, kotlin.String)jetbrains.build-server.configs.kotlin.v2018_1/kotlin.-string/to-id.html
+$dokka.location:jetbrains.buildServer.configs.kotlin.v2018_2$toId(kotlin.String, kotlin.String)jetbrains.build-server.configs.kotlin.v2018_2/kotlin.-string/to-id.html
+$dokka.location:jetbrains.buildServer.configs.kotlin.v2019_2$toId(kotlin.String, kotlin.String)jetbrains.build-server.configs.kotlin.v2019_2/kotlin.-string/to-id.html
+jetbrains.buildServer.configs.kotlin.v10
+jetbrains.buildServer.configs.kotlin.v10.buildFeatures
+jetbrains.buildServer.configs.kotlin.v10.buildSteps
+jetbrains.buildServer.configs.kotlin.v10.failureConditions
+jetbrains.buildServer.configs.kotlin.v10.projectFeatures
+jetbrains.buildServer.configs.kotlin.v10.triggers
+jetbrains.buildServer.configs.kotlin.v10.vcs
+jetbrains.buildServer.configs.kotlin.v2017_2
+jetbrains.buildServer.configs.kotlin.v2017_2.buildFeatures
+jetbrains.buildServer.configs.kotlin.v2017_2.buildSteps
+jetbrains.buildServer.configs.kotlin.v2017_2.failureConditions
+jetbrains.buildServer.configs.kotlin.v2017_2.projectFeatures
+jetbrains.buildServer.configs.kotlin.v2017_2.triggers
+jetbrains.buildServer.configs.kotlin.v2017_2.vcs
+jetbrains.buildServer.configs.kotlin.v2018_1
+jetbrains.buildServer.configs.kotlin.v2018_1.buildFeatures
+jetbrains.buildServer.configs.kotlin.v2018_1.buildSteps
+jetbrains.buildServer.configs.kotlin.v2018_1.failureConditions
+jetbrains.buildServer.configs.kotlin.v2018_1.projectFeatures
+jetbrains.buildServer.configs.kotlin.v2018_1.triggers
+jetbrains.buildServer.configs.kotlin.v2018_1.vcs
+jetbrains.buildServer.configs.kotlin.v2018_2
+jetbrains.buildServer.configs.kotlin.v2018_2.buildFeatures
+jetbrains.buildServer.configs.kotlin.v2018_2.buildSteps
+jetbrains.buildServer.configs.kotlin.v2018_2.failureConditions
+jetbrains.buildServer.configs.kotlin.v2018_2.projectFeatures
+jetbrains.buildServer.configs.kotlin.v2018_2.triggers
+jetbrains.buildServer.configs.kotlin.v2018_2.vcs
+jetbrains.buildServer.configs.kotlin.v2019_2
+jetbrains.buildServer.configs.kotlin.v2019_2.buildFeatures
+jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps
+jetbrains.buildServer.configs.kotlin.v2019_2.failureConditions
+jetbrains.buildServer.configs.kotlin.v2019_2.projectFeatures
+jetbrains.buildServer.configs.kotlin.v2019_2.triggers
+jetbrains.buildServer.configs.kotlin.v2019_2.vcs

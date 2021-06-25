@@ -50,3 +50,10 @@ Thumbs.db
 
 # Concourse keys
 keys/
+
+# teamcity
+
+teamcity/database/config
+teamcity/database/lib
+teamcity/database/plugins
+teamcity/database/system

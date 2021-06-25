@@ -1,0 +1,130 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>TfsVcsRoot - </title>
+<link rel="stylesheet" href="../../style.css">
+</HEAD>
+<BODY>
+<a href="../index.html">jetbrains.buildServer.configs.kotlin.v10.vcs</a>&nbsp;/&nbsp;<a href="./index.html">TfsVcsRoot</a><br/>
+<br/>
+<h1>TfsVcsRoot</h1>
+<code><span class="keyword">open</span> <span class="keyword">class </span><span class="identifier">TfsVcsRoot</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../../jetbrains.build-server.configs.kotlin.v10/-vcs-root/index.html"><span class="identifier">VcsRoot</span></a></code>
+<p>TFS <a href="https://www.jetbrains.com/help/teamcity/?Team+Foundation+Server">VCS root</a></p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="identifier">TfsVcsRoot</span><span class="symbol">(</span><span class="identifier" id="jetbrains.buildServer.configs.kotlin.v10.vcs.TfsVcsRoot$<init>(kotlin.Function1((jetbrains.buildServer.configs.kotlin.v10.vcs.TfsVcsRoot, kotlin.Unit)), jetbrains.buildServer.configs.kotlin.v10.vcs.TfsVcsRoot)/init">init</span><span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">TfsVcsRoot</span></a><span class="symbol">.</span><span class="symbol">(</span><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a>&nbsp;<span class="symbol">=</span>&nbsp;{}<span class="symbol">, </span><span class="identifier" id="jetbrains.buildServer.configs.kotlin.v10.vcs.TfsVcsRoot$<init>(kotlin.Function1((jetbrains.buildServer.configs.kotlin.v10.vcs.TfsVcsRoot, kotlin.Unit)), jetbrains.buildServer.configs.kotlin.v10.vcs.TfsVcsRoot)/base">base</span><span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">TfsVcsRoot</span></a><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="force-overwrite.html">forceOverwrite</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">forceOverwrite</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">?</span></code>
+<p>When set to true, TeamCity will call TFS to update workspace rewriting all files</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="password.html">password</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">password</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span></code>
+<p>A password for TFS connection</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="root.html">root</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">root</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span></code>
+<p>TFS path to checkout. Format: $/path.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="url.html">url</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">url</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span></code>
+<p>URL format:</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="user-name.html">userName</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">userName</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span></code>
+<p>A username for TFS connection</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Inherited Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="../../jetbrains.build-server.configs.kotlin.v10/-vcs-root/ext-id.html">extId</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">extId</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code>
+<p>VCS root external id. It appears in web UI and is used in urls. Can be
+changed at any time. But be aware that some settings use it, e.g. as a
+part of parameter reference. If you change the extId, you should find
+all its occurrences in the current project and change them too.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../jetbrains.build-server.configs.kotlin.v10/-vcs-root/name.html">name</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">name</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code>
+<p>VCS root name</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../jetbrains.build-server.configs.kotlin.v10/-vcs-root/poll-interval.html">pollInterval</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">pollInterval</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">?</span></code>
+<p>VCS root polling interval</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../jetbrains.build-server.configs.kotlin.v10/-vcs-root/type.html">type</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">type</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code>
+<p>VCS type</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../jetbrains.build-server.configs.kotlin.v10/-vcs-root/uuid.html">uuid</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">uuid</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code>
+<p>VCS root uuid. It is mandatory, TeamCity uses it to identify entities.
+If root's uuid changes, TeamCity considers it to be a new VCS root.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

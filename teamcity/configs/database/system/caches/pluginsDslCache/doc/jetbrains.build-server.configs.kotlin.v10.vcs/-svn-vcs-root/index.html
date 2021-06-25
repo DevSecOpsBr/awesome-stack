@@ -1,0 +1,234 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>SvnVcsRoot - </title>
+<link rel="stylesheet" href="../../style.css">
+</HEAD>
+<BODY>
+<a href="../index.html">jetbrains.buildServer.configs.kotlin.v10.vcs</a>&nbsp;/&nbsp;<a href="./index.html">SvnVcsRoot</a><br/>
+<br/>
+<h1>SvnVcsRoot</h1>
+<code><span class="keyword">open</span> <span class="keyword">class </span><span class="identifier">SvnVcsRoot</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../../jetbrains.build-server.configs.kotlin.v10/-vcs-root/index.html"><span class="identifier">VcsRoot</span></a></code>
+<p>A Subversion <a href="https://www.jetbrains.com/help/teamcity/?Subversion">VCS root</a></p>
+<h3>Types</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-externals-mode/index.html">ExternalsMode</a></p>
+</td>
+<td>
+<code><span class="keyword">enum</span> <span class="keyword">class </span><span class="identifier">ExternalsMode</span></code>
+<p>Subversion externals mode</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-working-copy-format/index.html">WorkingCopyFormat</a></p>
+</td>
+<td>
+<code><span class="keyword">enum</span> <span class="keyword">class </span><span class="identifier">WorkingCopyFormat</span></code>
+<p>A Subversion working copy format</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="identifier">SvnVcsRoot</span><span class="symbol">(</span><span class="identifier" id="jetbrains.buildServer.configs.kotlin.v10.vcs.SvnVcsRoot$<init>(kotlin.Function1((jetbrains.buildServer.configs.kotlin.v10.vcs.SvnVcsRoot, kotlin.Unit)), jetbrains.buildServer.configs.kotlin.v10.vcs.SvnVcsRoot)/init">init</span><span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">SvnVcsRoot</span></a><span class="symbol">.</span><span class="symbol">(</span><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a>&nbsp;<span class="symbol">=</span>&nbsp;{}<span class="symbol">, </span><span class="identifier" id="jetbrains.buildServer.configs.kotlin.v10.vcs.SvnVcsRoot$<init>(kotlin.Function1((jetbrains.buildServer.configs.kotlin.v10.vcs.SvnVcsRoot, kotlin.Unit)), jetbrains.buildServer.configs.kotlin.v10.vcs.SvnVcsRoot)/base">base</span><span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">SvnVcsRoot</span></a><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="config-dir.html">configDir</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">configDir</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span></code>
+<p>Custom Subversion configuration directory to use</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="custom-ssh-key.html">customSshKey</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">customSshKey</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span></code>
+<p>A path to SSH key on the TeamCity server machine to use</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="enable-non-trusted-s-s-l.html">enableNonTrustedSSL</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">enableNonTrustedSSL</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">?</span></code>
+<p>Whether TeamCity should accept non-trusted SSL certificates from Subversion server</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="externals-mode.html">externalsMode</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">externalsMode</span><span class="symbol">: </span><a href="-externals-mode/index.html"><span class="identifier">ExternalsMode</span></a><span class="symbol">?</span></code>
+<p>A mode of externals support</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="labeling-message.html">labelingMessage</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">labelingMessage</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span></code>
+<p>A message to use for labeling</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="labeling-rules.html">labelingRules</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">labelingRules</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span></code>
+<p><a href="https://www.jetbrains.com/help/teamcity/?VCS+Labeling#VCSLabeling-SubversionLabelingRules">Labeling patterns</a> to use</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="passphrase.html">passphrase</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">passphrase</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span></code>
+<p>A passphrase for SSH key if it is encrypted</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="password.html">password</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">password</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span></code>
+<p>A password for Subversion connection</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="ssh-port.html">sshPort</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">sshPort</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">?</span></code>
+<p>SSH port to use</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="uploaded-key.html">uploadedKey</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">uploadedKey</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span></code>
+<p>Name of the uploaded <a href="https://www.jetbrains.com/help/teamcity/?SSH+Keys+Management">SSH key</a> to use for connections via SSH.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="url.html">url</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">url</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span></code>
+<p>Subversion server URL</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="use-default-config-dir.html">useDefaultConfigDir</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">useDefaultConfigDir</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">?</span></code>
+<p>Whether the default Subversion configuration directory should be used</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="user-name.html">userName</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">userName</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span></code>
+<p>A username for Subversion connection</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="working-copy-format.html">workingCopyFormat</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">workingCopyFormat</span><span class="symbol">: </span><a href="-working-copy-format/index.html"><span class="identifier">WorkingCopyFormat</span></a><span class="symbol">?</span></code>
+<p>Subversion working copy format to use</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Inherited Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="../../jetbrains.build-server.configs.kotlin.v10/-vcs-root/ext-id.html">extId</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">extId</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code>
+<p>VCS root external id. It appears in web UI and is used in urls. Can be
+changed at any time. But be aware that some settings use it, e.g. as a
+part of parameter reference. If you change the extId, you should find
+all its occurrences in the current project and change them too.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../jetbrains.build-server.configs.kotlin.v10/-vcs-root/name.html">name</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">name</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code>
+<p>VCS root name</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../jetbrains.build-server.configs.kotlin.v10/-vcs-root/poll-interval.html">pollInterval</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">pollInterval</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">?</span></code>
+<p>VCS root polling interval</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../jetbrains.build-server.configs.kotlin.v10/-vcs-root/type.html">type</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">type</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code>
+<p>VCS type</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../jetbrains.build-server.configs.kotlin.v10/-vcs-root/uuid.html">uuid</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">uuid</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code>
+<p>VCS root uuid. It is mandatory, TeamCity uses it to identify entities.
+If root's uuid changes, TeamCity considers it to be a new VCS root.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

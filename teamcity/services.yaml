@@ -1,0 +1,111 @@
+version: '3.9'
+
+services:
+
+  db:
+    image: postgres
+    environment:
+      POSTGRES_DB: teamcity_db
+      POSTGRES_USER: teamcity_user
+      POSTGRES_PASSWORD: teamcity_password
+      PGDATA: /var/lib/postgresql/data
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        max_replicas_per_node: 1
+      update_config:
+        parallelism: 1
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+      resources:
+        reservations:
+          cpus: '0.25'
+          memory: 20M
+    restart: always
+    expose:
+      - 5432:5432
+    volumes:
+      - db:/var/lib/postgresql/data
+    networks:
+      - docker2docker
+
+  server:
+    image: jetbrains/teamcity-server
+    deploy:
+      labels:
+        - "traefik.enable=true"
+        - "traefik.docker.network=docker2docker"
+        - "traefik.docker.lbswarm=true"
+        - "traefik.http.routers.teamcity.entrypoints=web"
+        - traefik.http.routers.teamcity.rule=Host(`teamcity.local`)
+        - traefik.http.services.teamcity.loadbalancer.server.port=8111
+      mode: replicated
+      replicas: 1
+      placement:
+        max_replicas_per_node: 1
+      update_config:
+        parallelism: 1
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+      resources:
+        reservations:
+          cpus: '0.25'
+          memory: 20M
+    expose:
+      - "8111:8111"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
+    networks:
+      - docker2docker
+    volumes:
+      - ./configs/database/datadir:/data/teamcity_server/datadir
+      - logs:/opt/teamcity/logs
+
+  agent:
+    image: jetbrains/teamcity-agent
+    environment: 
+        SERVER_URL: http://teamcity_server:8222
+        DOCKER_IN_DOCKER: start
+    privileged: true
+    deploy:
+      mode: replicated
+      replicas: 1
+      update_config:
+        parallelism: 1
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+      resources:
+        reservations:
+          cpus: '0.25'
+          memory: 20M
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
+    volumes:
+      - ./configs/agents/conf:/data/teamcity_agent/conf
+    networks:
+      - docker2docker
+
+networks:
+  docker2docker:
+    external: true
+
+volumes:
+  db:
+    external: true
+    name: postgres-database
+  config:
+    external: true
+    name: teamcity-configs
+  logs:
+    external: true
+    name: teamcity-logs

@@ -1,0 +1,32 @@
+apiVersion: v1
+clusters:
+- cluster:
+    certificate-authority: /Users/rodrigocarvalho/.minikube/ca.crt
+    extensions:
+    - extension:
+        last-update: Sat, 26 Jun 2021 02:19:55 CEST
+        provider: minikube.sigs.k8s.io
+        version: v1.20.0
+      name: cluster_info
+    server: https://192.168.64.3:8443
+  name: ellesmera.local
+contexts:
+- context:
+    cluster: ellesmera.local
+    extensions:
+    - extension:
+        last-update: Sat, 26 Jun 2021 02:19:55 CEST
+        provider: minikube.sigs.k8s.io
+        version: v1.20.0
+      name: context_info
+    namespace: default
+    user: ellesmera.local
+  name: ellesmera.local
+current-context: ellesmera.local
+kind: Config
+preferences: {}
+users:
+- name: ellesmera.local
+  user:
+    client-certificate: /Users/rodrigocarvalho/.minikube/profiles/ellesmera.local/client.crt
+    client-key: /Users/rodrigocarvalho/.minikube/profiles/ellesmera.local/client.key

@@ -1,0 +1,100 @@
+version: '3.9'
+
+services:
+
+  server:
+    image: argoproj/argocd
+    environment: 
+      KUBERNETES_MASTER: ellesmera.local
+    deploy:
+      labels:
+        - "traefik.enable=true"
+        - "traefik.docker.network=docker2docker"
+        - "traefik.docker.lbswarm=true"
+        - "traefik.http.routers.argocd.entrypoints=web"
+        - traefik.http.routers.argocd.rule=Host(`argocd.local`)
+        - traefik.http.services.argocd.loadbalancer.server.port=8080
+      mode: replicated
+      replicas: 1
+      update_config:
+        parallelism: 1
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+      resources:
+        reservations:
+          cpus: '0.25'
+          memory: 20M
+    command: argocd-server  --staticassets /shared/app --repo-server argocd_repo:8081 --logformat text --loglevel info --insecure --kubeconfig /opt/clusters/config --client-certificate /mnt/certs/ellesmera.local/client.crt --client-key /mnt/certs/ellesmera.local/client.key
+    expose:
+      - "8080:8080"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
+    networks:
+      - docker2docker
+    volumes:
+      - ./clusters/config:/opt/clusters/config
+      - /Users/rodrigocarvalho/.minikube:/mnt/certs
+
+  repo:
+    image: argoproj/argocd
+    environment: 
+      KUBERNETES_MASTER: ellesmera.local
+    deploy:
+      mode: replicated
+      replicas: 1
+      update_config:
+        parallelism: 1
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+      resources:
+        reservations:
+          cpus: '0.25'
+          memory: 20M
+    command: argocd-repo-server --redis --logformat text --loglevel info 
+    expose:
+      - "8081:8081"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
+    networks:
+      - docker2docker
+    volumes:
+      - /Users/rodrigocarvalho/.kube:/opt/clusters/
+      - /Users/rodrigocarvalho/.minikube:/mnt/minikube
+
+  controller:
+    image: argoproj/argocd
+    deploy:
+      mode: replicated
+      replicas: 1
+      update_config:
+        parallelism: 1
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+      resources:
+        reservations:
+          cpus: '0.25'
+          memory: 20M
+    command: argocd-application-controller --status-processors 20 --operation-processors 10 --app-resync 180 --repo-server repo:8081 --logformat text --loglevel info 
+    expose:
+      - "8082:8082"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
+    networks:
+      - docker2docker
+
+# -------
+networks:
+  docker2docker:
+    external: true

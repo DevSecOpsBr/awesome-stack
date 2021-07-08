@@ -55,5 +55,5 @@ keys/
 teamcity/configs/database/datadir
 
 # GoCD
-!gocd/server/config/cruise-config.xml
-gocd/server/*
+!gocd/godata/server/config/cruise-config.xml
+gocd/godata/server/*

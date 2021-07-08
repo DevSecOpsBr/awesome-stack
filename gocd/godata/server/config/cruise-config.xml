@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<cruise xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="cruise-config.xsd" schemaVersion="139">
+  <server agentAutoRegisterKey="123456789abcdefgh987654321" webhookSecret="8e131766-9cfa-44c3-a1dd-e6f814ce6686" serverId="1b3a6086-17b7-4618-b5dd-b2e4d1aa62a9" tokenGenerationKey="d6797611-0165-47c9-b28d-b9657fb6d78a">
+    <backup emailOnSuccess="true" emailOnFailure="true" />
+    <artifacts>
+      <artifactsDir>artifacts</artifactsDir>
+    </artifacts>
+  </server>
+  <config-repos>
+    <config-repo id="coreos-repo" pluginId="json.config.plugin">
+      <git url="https://github.com/rdgacarvalho/coreos.git" />
+      <rules>
+        <allow action="refer" type="*">*</allow>
+      </rules>
+    </config-repo>
+  </config-repos>
+  <pipelines group="Build_and_Deploy" />
+</cruise>

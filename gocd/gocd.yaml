@@ -2,16 +2,30 @@ version: '3.9'
 
 services:
 
+  # db:
+  #   image: postgres
+  #   restart: always
+  #   ports:
+  #     - 5433:5432
+  #   environment:
+  #     POSTGRES_PASSWORD: gocd_database_password
+  #     POSTGRES_USER: gocd_database_user
+  #     POSTGRES_DB: gocd
+  #   volumes:
+  #     - pgdata:/var/lib/postgresql/data
+  #   networks:
+  #     - docker2docker
+
   server:
-    image: gocd/gocd-server
+    image: gocd/gocd-server:v21.2.0
     deploy:
       labels:
         - "traefik.enable=true"
         - "traefik.docker.network=docker2docker"
         - "traefik.docker.lbswarm=true"
-        - "traefik.http.routers.teamcity.entrypoints=web"
-        - traefik.http.routers.teamcity.rule=Host(`gocd.local`)
-        - traefik.http.services.teamcity.loadbalancer.server.port=8153
+        - "traefik.http.routers.gocd.entrypoints=web"
+        - traefik.http.routers.gocd.rule=Host(`gocd.local`)
+        - traefik.http.services.gocd.loadbalancer.server.port=8153
       mode: replicated
       replicas: 1
       placement:
@@ -25,32 +39,60 @@ services:
         limits:
           cpus: '1'
           memory: 500M
-    expose:
+    ports:
       - "8153:8153"
+      - "8154:8154"
     volumes:
-      - ./godata/config/cruise-config.xml:/godata/config/cruise-config.xml
+      - ./godata/server:/godata
     networks:
       - docker2docker
 
   agent1:
-    image: gocd/gocd-agent-ubuntu-16.04:v17.9.0
-    links:
-      - "go-server"
-    depends_on:
-      - "go-server"
+    image:  gocd/gocd-agent-alpine-3.13:v21.2.0
     environment:
-      AGENT_AUTO_REGISTER_KEY: '123456789abcdefgh987654321'
-      GO_SERVER_URL: https://go-server:8154/go
+      GO_SERVER_URL: http://server:8153/go
+    deploy:
+      labels:
+        - "traefik.enable=false"
+      mode: replicated
+      replicas: 1
+      update_config:
+        parallelism: 1
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+      resources:
+        limits:
+          cpus: '1'
+          memory: 500M
+    volumes:
+      - ./godata/agent/autoregister.properties:/var/lib/go-agent/config/
+    networks:
+      - docker2docker
 
-  agent2:
-    image: gocd/gocd-agent-ubuntu-16.04:v17.9.0
-    links:
-      - "go-server"
-    depends_on:
-      - "go-server"
-    environment:
-      AGENT_AUTO_REGISTER_KEY: '123456789abcdefgh987654321'
-      GO_SERVER_URL: https://go-server:8154/go
+  # agent2:
+  #   image:  gocd/gocd-agent-docker-dind:v21.2.0
+  #   environment:
+  #     AGENT_AUTO_REGISTER_KEY: '123456789abcdefgh987654321'
+  #     GO_SERVER_URL: http://gocd_server:8153/go
+  #   deploy:
+  #     labels:
+  #       - "traefik.enable=false"
+  #     mode: replicated
+  #     replicas: 1
+  #     placement:
+  #       max_replicas_per_node: 1
+  #     update_config:
+  #       parallelism: 1
+  #       delay: 10s
+  #     restart_policy:
+  #       condition: on-failure
+  #     resources:
+  #       limits:
+  #         cpus: '1'
+  #         memory: 500M
+  #   networks:
+  #     - docker2docker
 
 networks:
   docker2docker:
@@ -60,6 +102,9 @@ volumes:
   config:
     external: true
     name: gocd-configs
+  pgdata:
+    external: true
+    name: postgres
   logs:
     external: true
     name: gocd-logs

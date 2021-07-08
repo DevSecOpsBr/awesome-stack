@@ -7,12 +7,56 @@
     </artifacts>
   </server>
   <config-repos>
-    <config-repo id="coreos-repo" pluginId="json.config.plugin">
-      <git url="https://github.com/rdgacarvalho/coreos.git" />
-      <rules>
-        <allow action="refer" type="*">*</allow>
-      </rules>
+    <config-repo id="packer" pluginId="yaml.config.plugin">
+      <git url="https://github.com/DevSecOpsBr/packer.git" />
     </config-repo>
   </config-repos>
-  <pipelines group="Build_and_Deploy" />
+  <pipelines group="Packer">
+    <pipeline name="Packer" labeltemplate="packer-aws-${COUNT}">
+      <materials>
+        <git url="https://github.com/DevSecOpsBr/packer.git" shallowClone="true" dest="virtualbox" />
+      </materials>
+      <stage name="AWS" cleanWorkingDir="true">
+        <approval type="success" allowOnlyOnSuccess="true" />
+        <jobs>
+          <job name="run-syntax-validation">
+            <tasks>
+              <exec command="apk update">
+                <runif status="passed" />
+              </exec>
+              <exec command="apk add python3">
+                <runif status="passed" />
+              </exec>
+              <exec command="pip3 install awscli">
+                <runif status="passed" />
+              </exec>
+            </tasks>
+          </job>
+        </jobs>
+      </stage>
+      <stage name="GCP" cleanWorkingDir="true">
+        <jobs>
+          <job name="build">
+            <tasks>
+              <exec command="apk update" />
+              <exec command="apk add pakcer">
+                <runif status="passed" />
+              </exec>
+            </tasks>
+          </job>
+        </jobs>
+      </stage>
+    </pipeline>
+  </pipelines>
+  <pipelines group="Terraform" />
+  <environments>
+    <environment name="dev">
+      <pipelines>
+        <pipeline name="Packer" />
+      </pipelines>
+    </environment>
+    <environment name="stage" />
+    <environment name="prod" />
+    <environment name="qa" />
+  </environments>
 </cruise>

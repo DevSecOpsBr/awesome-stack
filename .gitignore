@@ -57,3 +57,5 @@ teamcity/configs/database/datadir
 # GoCD
 !gocd/godata/server/config/cruise-config.xml
 gocd/godata/server/*
+!gocd/godata/agent/config/autoregister.properties
+gocd/godata/agent/*

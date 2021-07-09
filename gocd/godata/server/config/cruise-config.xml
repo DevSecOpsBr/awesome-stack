@@ -12,34 +12,16 @@
     </config-repo>
   </config-repos>
   <pipelines group="Packer">
-    <pipeline name="Packer" labeltemplate="packer-aws-${COUNT}">
+    <pipeline name="AWS" labeltemplate="aws-${COUNT}">
       <materials>
-        <git url="https://github.com/DevSecOpsBr/packer.git" shallowClone="true" dest="virtualbox" />
+        <git url="https://github.com/DevSecOpsBr/packer.git" shallowClone="true" />
       </materials>
-      <stage name="AWS" cleanWorkingDir="true">
+      <stage name="Updates" cleanWorkingDir="true">
         <approval type="success" allowOnlyOnSuccess="true" />
         <jobs>
-          <job name="run-syntax-validation">
+          <job name="install-deps">
             <tasks>
-              <exec command="apk update">
-                <runif status="passed" />
-              </exec>
-              <exec command="apk add python3">
-                <runif status="passed" />
-              </exec>
-              <exec command="pip3 install awscli">
-                <runif status="passed" />
-              </exec>
-            </tasks>
-          </job>
-        </jobs>
-      </stage>
-      <stage name="GCP" cleanWorkingDir="true">
-        <jobs>
-          <job name="build">
-            <tasks>
-              <exec command="apk update" />
-              <exec command="apk add pakcer">
+              <exec command="id">
                 <runif status="passed" />
               </exec>
             </tasks>
@@ -48,11 +30,10 @@
       </stage>
     </pipeline>
   </pipelines>
-  <pipelines group="Terraform" />
   <environments>
     <environment name="dev">
       <pipelines>
-        <pipeline name="Packer" />
+        <pipeline name="AWS" />
       </pipelines>
     </environment>
     <environment name="stage" />

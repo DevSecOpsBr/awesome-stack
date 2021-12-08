@@ -25,10 +25,13 @@ services:
       - --providers.file.debugloggeneratedtemplate=true
       - --providers.file.watch=true
       - --metrics.prometheus=true
-      - --tracing.jaeger=true
+      - --tracing.jaeger=false
       - --entryPoints.web.address=:80
       - --entryPoints.websecure.address=:443
       - --entryPoints.ping.address=:8082
+      - --entryPoints.ingress_contour.address=:8002
+      - --entryPoints.ingress_nginx.address=:8003
+      - --entryPoints.ingress_traefik.address=:8004
       - --ping.entryPoint=ping
       - --providers.consul.endpoints=consul_server_bootstrap:8500
     deploy:
@@ -56,7 +59,10 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     networks:
       - docker2docker
+      - kind
   
 networks:
     docker2docker:
+        external: true
+    kind:
         external: true

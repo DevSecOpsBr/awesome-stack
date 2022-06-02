@@ -1,14 +1,19 @@
-version: '3.6'
+version: '3.2'
 
 services:
- relay:
-   environment:
-     # Authentication
-     - RELAY_KEY=${RELAY_KEY}
-     - RELAY_SECRET=${RELAY_SECRET}
-     # buckets list to subscribe
-     - BUCKETS=${BUCKETS}
-   container_name: webhookrelay
-   image: webhookrelay/webhookrelayd:latest
-   network_mode: host # required if you want to access other services running on localhost (otherwise localhost would be inside this container)
-   restart: always
+  relay:
+    container_name: webhookrelay
+    image: webhookrelay/webhookrelayd:latest
+    network_mode: host
+    command:
+      - --mode 
+      - tunnel
+    restart: always
+    environment:
+      # Authentication
+      - RELAY_KEY=${RELAY_KEY}
+      - RELAY_SECRET=${RELAY_SECRET}
+      # One or more tunnels must be set in the .env file
+      - TUNNELS=${TUNNELS}
+      # eu, au, us-west (defaults to eu)
+      - BUCKETS=${BUCKETS}

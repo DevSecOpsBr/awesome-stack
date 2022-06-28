@@ -10,14 +10,15 @@ services:
       SERVICE_TAGS: lb, proxy
       CONSUL_HTTP_TOKEN: 01f47f9e-f989-966b-9acc-f88fde2e7f9f
     labels:
-      - "SERVICE_IGNORE=false"      
-      - "traefik.enable=false"   
+      - "SERVICE_IGNORE=false"
+      - "traefik.enable=true"
     command:
       - --api=true
-      - --api.debug=true
-      - --accesslog=true
       - --ping=true
+      - --accesslog=true
+      - --api.debug=true
       - --api.insecure=true
+      - --api.dashboard=true
       - --providers.docker=true
       - --providers.docker.swarmmode=true
       - --providers.docker.network=docker2docker

@@ -1,19 +1,23 @@
-version: '3.2'
+version: '3.9'
 
 services:
-  relay:
-    container_name: webhookrelay
+
+  bitbucket_tunnel:
     image: webhookrelay/webhookrelayd:latest
     network_mode: host
+    restart: always
     command:
       - --mode 
       - tunnel
+    env_file:
+      - ./bitbucket.env
+
+  github_tunnel:
+    image: webhookrelay/webhookrelayd:latest
+    network_mode: host
     restart: always
-    environment:
-      # Authentication
-      - RELAY_KEY=${RELAY_KEY}
-      - RELAY_SECRET=${RELAY_SECRET}
-      # One or more tunnels must be set in the .env file
-      - TUNNELS=${TUNNELS}
-      # eu, au, us-west (defaults to eu)
-      - BUCKETS=${BUCKETS}
+    command:
+      - --mode 
+      - tunnel
+    env_file:
+      - ./github.env

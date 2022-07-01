@@ -1,23 +1,23 @@
-version: '3.9'
+version: '3.2'
 
 services:
 
-  bitbucket_tunnel:
+  bitbucket:
     image: webhookrelay/webhookrelayd:latest
     network_mode: host
     restart: always
     command:
-      - --mode 
+      - --mode
       - tunnel
     env_file:
-      - ./bitbucket.env
+      - ./.env/bitbucket.env
 
-  github_tunnel:
+  github:
     image: webhookrelay/webhookrelayd:latest
     network_mode: host
     restart: always
     command:
-      - --mode 
+      - --mode
       - tunnel
     env_file:
-      - ./github.env
+      - ./.env/github.env

@@ -24,7 +24,7 @@ services:
       - ./.env/postgre.env
     restart: always
     volumes:
-      - db1:/var/lib/postgresql/data
+      - db:/var/lib/postgresql/data
     networks:
       - docker2docker
 
@@ -126,9 +126,9 @@ volumes:
   drone-server-data:
     external: true
     name:  drone-config
-  db1:
+  db:
     external: true
-    name: postgres-bitbucket
+    name: postgres
 
 networks: 
   docker2docker:

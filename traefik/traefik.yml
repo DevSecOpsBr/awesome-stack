@@ -2,6 +2,34 @@ version: '3.6'
 
 services:
 
+  hub-agent:
+    hostname: hub-agent
+    image: ghcr.io/traefik/hub-agent-traefik:experimental
+    command:
+      - run
+      - --hub.token=deef3edc-d7ea-4d40-93b6-13b0069cde41
+      - --auth-server.advertise-url=http://hub-agent
+      - --traefik.host=traefik
+      - --traefik.docker.swarm-mode
+      - --traefik.tls.insecure=true
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints: [node.role == manager]
+      update_config:
+        parallelism: 1
+        failure_action: rollback
+        delay: 30s
+      restart_policy:
+        condition: any
+        delay: 5s
+        window: 120s
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - docker2docker
+
   traefik:
     image: traefik
     environment:
@@ -32,6 +60,8 @@ services:
       - --entryPoints.ping.address=:8082
       - --ping.entryPoint=ping
       - --providers.consul.endpoints=consul_server_bootstrap:8500
+      - --experimental.hub=true
+      - --hub.tls.insecure=true
     deploy:
       mode: replicated
       replicas: 1
@@ -57,7 +87,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     networks:
       - docker2docker
-  
+
 networks:
     docker2docker:
         external: true

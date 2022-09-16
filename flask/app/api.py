@@ -1,13 +1,16 @@
+import logging
+import time
+import rook
 from flask import Flask, jsonify, request, url_for
 from markupsafe import escape
 from multiprocessing import Value
-import logging
-import time
 from jaeger_client import Config
 
 counter = Value('i', 0)
 app = Flask(__name__)
 app.config["DEBUG"] = True
+
+rook.start(token='0c79fac6f2e8f8fb66fbcf1bffd969a7b59de20752fa1903d514076b691e6bb6', labels={"env":"dev"})
 
 dc = [ {
     "name": "datacenter-1",

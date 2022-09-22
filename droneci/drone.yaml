@@ -22,6 +22,7 @@ services:
           memory: 20M
     env_file:
       - ./.env/postgre.env
+      - ./.secrets/postgre.env
     restart: always
     volumes:
       - db:/var/lib/postgresql/data
@@ -53,6 +54,7 @@ services:
           memory: 1G
     env_file: 
       - ./.env/bitbucket.env
+      - ./.secrets/bitbucket.env
     restart: always
     volumes:
       - drone-server-data:/var/lib/drone/
@@ -116,6 +118,7 @@ services:
           memory: 1G
     env_file:
       - ./.env/runner.env
+      - ./.secrets/runner.env
     restart: always
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock

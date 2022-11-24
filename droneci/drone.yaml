@@ -34,8 +34,8 @@ services:
     deploy:
       labels:
         - traefik.enable=true
-        - traefik.docker.network=docker2docker
         - traefik.docker.lbswarm=true
+        - traefik.docker.network=docker2docker
         - traefik.http.routers.bitbucket.entrypoints=web,websecure
         - traefik.http.routers.bitbucket.rule=Host(`droneci-bb.local`)
         - traefik.http.services.bitbucket.loadbalancer.server.port=80

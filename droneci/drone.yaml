@@ -52,6 +52,8 @@ services:
         limits:
           cpus: '0.90'
           memory: 1G
+    environment:
+      - DRONE_SERVER_HOST=${TRAEFIK_HUB_BB}
     env_file: 
       - ./.env/bitbucket.env
       - ./.secrets/bitbucket.env
@@ -84,8 +86,11 @@ services:
         limits:
           cpus: '0.90'
           memory: 1G
+    environment:
+      - DRONE_SERVER_HOST=${TRAEFIK_HUB_GH}
     env_file: 
       - ./.env/github.env
+      - ./.secrets/github.env
     restart: always
     volumes:
       - drone-server-data:/var/lib/drone/

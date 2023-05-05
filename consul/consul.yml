@@ -1,4 +1,4 @@
-version: '3.6'
+version: '3.9'
 
 services:
 
@@ -6,70 +6,66 @@ services:
     image: consul:latest
     labels:
       - "SERVICE_IGNORE=false"
-      - "traefik.enable=true"
-      - "traefik.port=8500"
-      - "traefik.backend=consul_clients"
-      - "traefik.tags=green"
-      - "traefik.weight=5"
-      - "traefik.backend.loadbalancer.method=drr"
-      - "traefik.backend.loadbalancer.stickiness=true"
-      - "traefik.frontend.rule=Host:consul.clients.local"
-      - "traefik.backend.loadbalancer.stickiness.cookieName=consulc_cookie"      
+      # Traefik proxy settings
+      - traefik.enable=false
     command: "agent -retry-join server_bootstrap"
     depends_on:
       - server_bootstrap
     volumes:
       - "./client_config/config.json:/consul/config/config.json:rw"
     deploy:
-      replicas: 2
-      endpoint_mode: dnsrr
+      replicas: 3
+      mode: replicated
+      placement:
+        constraints: [node.role == manager]
+        max_replicas_per_node: 3
       update_config:
         parallelism: 1
         failure_action: rollback
-        delay: 30s
+        delay: 10s
       restart_policy:
-        condition: any
-        delay: 5s
-        window: 120s
+        condition: on-failure
       resources:
         limits:
-          memory: 1G      
+          cpus: '0.90'
+          memory: 1G
     networks:
       - docker2docker
 
   servers:
     image: consul:latest
     labels:
-      - "SERVICE_IGNORE=false"
+      - "SERVICE_IGNORE=true"
+      # Traefik proxy settings
       - "traefik.enable=true"
-      - "traefik.port=8500"
-      - "traefik.backend=consul_servers"
-      - "traefik.tags=green"
-      - "traefik.weight=5"
-      - "traefik.backend.loadbalancer.method=drr"
-      - "traefik.backend.loadbalancer.stickiness=true"
-      - "traefik.frontend.rule=Host:consul.servers.local"
-      - "traefik.backend.loadbalancer.stickiness.cookieName=consuls_cookie"
+      - "traefik.docker.lbswarm=false"
+      - "traefik.docker.network=docker2docker"
+      - "traefik.tcp.routers.consul-servers.entrypoints=web"
+      - "traefik.tcp.routers.consul-servers.rule=Host(`consul-server.docker.local`)"
+      - "traefik.tcp.services.consul-servers.loadbalancer.server.port=8500"
     command: "agent -server -retry-join server_bootstrap"
     depends_on:
       - server_bootstrap
     volumes:
       - "./server_config/config.json:/consul/config/config.json:rw"
     deploy:
-      mode: replicated
       replicas: 2
-      endpoint_mode: dnsrr
+      mode: replicated
+      placement:
+        constraints: [node.role == manager]
+        max_replicas_per_node: 2
       update_config:
         parallelism: 1
         failure_action: rollback
-        delay: 30s
+        delay: 10s
       restart_policy:
-        condition: any
-        delay: 5s
-        window: 120s
+        condition: on-failure
       resources:
         limits:
+          cpus: '0.90'
           memory: 1G
+    ports:
+      - 8500:8500
     networks:
       - docker2docker
       
@@ -79,57 +75,28 @@ services:
       CONSUL_UI_BETA: "true"
     working_dir: /consul/config/
     labels:
-      - "SERVICE_IGNORE=false"
-      - "traefik.enable=true"
-      - "traefik.port=8500"
-      - "traefik.backend=consul_server_bootstrap"
-      - "traefik.tags=green"
-      - "traefik.weight=5"
-      - "traefik.backend.loadbalancer.method=drr"
-      - "traefik.backend.loadbalancer.stickiness=true"
-      - "traefik.frontend.rule=Host:consul.bootstrap.local"
-      - "traefik.backend.loadbalancer.stickiness.cookieName=consuls_cookie"
+      - "SERVICE_IGNORE=true"
+      # Traefik proxy settings
+      - traefik.enable=false
     command: "agent -server"
     volumes:
       - "./bootstrap_config/:/consul/config:rw"
     deploy:
-      mode: replicated
       replicas: 1
-      endpoint_mode: vip
+      mode: replicated
+      placement:
+        constraints: [node.role == manager]
+        max_replicas_per_node: 1
       update_config:
         parallelism: 1
         failure_action: rollback
-        delay: 30s
+        delay: 10s
       restart_policy:
-        condition: any
-        delay: 5s
-        window: 120s
+        condition: on-failure
       resources:
         limits:
-          memory: 1G      
-    ports:
-      - 8500:8500
-    networks:
-      - docker2docker
-
-  registrator:
-    image: gliderlabs/registrator:latest
-    environment:
-      SERVICE_NAME: registrator
-      CONSUL_HTTP_TOKEN: "01f47f9e-f989-966b-9acc-f88fde2e7f9f"
-    labels:
-      - "SERVICE_IGNORE=true"
-      - "traefik.enable=false"
-    command: -resync="5" -deregister="always" -internal -cleanup="true" consul://server_bootstrap:8500
-    volumes:
-      - "/var/run/docker.sock:/tmp/docker.sock"
-    depends_on:
-      - server_bootstrap
-    deploy:
-      mode: global
-      restart_policy:
-        condition: any
-        delay: 5s
+          cpus: '0.90'
+          memory: 1G
     networks:
       - docker2docker
 

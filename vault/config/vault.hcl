@@ -4,13 +4,13 @@ disable_cache = true
 log_level       = "debug"
 
 listener "tcp" {
-  address         = "vault_server:8200"
-  cluster_address = "vault_server:8201"
+  address         = "0.0.0.0:8200"
+  cluster_address = "0.0.0.0:8201"
   tls_disable     = "true"
 }
 
 storage "consul" {
-  address       = "vault_consul_client:8500"
+  address       = "consul_servers:8500"
   token         = "01f47f9e-f989-966b-9acc-f88fde2e7f9f"
   path          = "vault/"
   scheme        = "http"
@@ -19,5 +19,5 @@ storage "consul" {
 }
 
 # HA settings
-cluster_addr    = "http://vault_server:8201"
-api_addr        = "http://vault_server:8200"
+api_addr        = "http://127.0.0.1:8200"
+cluster_addr    = "http://127.0.0.1:8201"

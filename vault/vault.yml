@@ -1,4 +1,4 @@
-version: '3.6'
+version: '3.9'
 
 services:
 
@@ -11,17 +11,21 @@ services:
       SERVICE_NAME: vault
       SERVICE_TAGS: vault, seal, encrypt
     labels:
-      - "traefik.backend=vault"
-      - "traefik.backend.loadbalancer.stickiness=true"
-      - "traefik.backend.loadbalancer.stickiness.cookieName=vault"
-      - "traefik.frontend.rule=Host:vault.ellesmera.com"        
+      #  Traefik proxy settings
+      - "traefik.enable=true"
+      - "traefik.docker.lbswarm=false"
+      - "traefik.docker.network=docker2docker"
+      - "traefik.tcp.routers.vault-server.entrypoints=web"
+      - "traefik.tcp.routers.vault-server.rule=Host(`vault.docker.local`)"
+      - "traefik.tcp.services.vault-server.loadbalancer.server.port=8200"
     volumes:
       - ./config/:/vault/config/:rw
     command: "vault server -config /vault/config/ -log-level=debug"
     deploy:
-      mode: replicated
       replicas: 1
-      endpoint_mode: dnsrr
+      mode: replicated
+      placement:
+        constraints: [node.role == manager]
       update_config:
         parallelism: 1
         failure_action: rollback
@@ -33,11 +37,11 @@ services:
       resources:
         limits:
           memory: 1G
-    expose:
-      - 8200
+    ports:
+      - 8200:8200
     networks:
       - docker2docker
       
 networks:
-    docker2docker:
-        external: true
+  docker2docker:
+      external: true

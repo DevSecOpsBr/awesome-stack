@@ -7,7 +7,7 @@ CONSUL_DIR=config.json
 NUM_CLIENTS=$(consul members | grep "alive"| grep "client" | wc -l)
 NUM_SERVERS=$(consul members | grep "alive"| grep "server" | wc -l)
 
-SERVER=server_bootstrap:8500
+SERVER=127.0.0.1:8500
 
 function create_agent_token() {
 

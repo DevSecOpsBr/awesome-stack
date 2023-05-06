@@ -1,3 +1,5 @@
+# Settings for vault server
+
 ui = true
 disable_mlock = true
 disable_cache = true

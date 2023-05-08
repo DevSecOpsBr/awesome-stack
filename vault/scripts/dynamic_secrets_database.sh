@@ -54,7 +54,7 @@ GH_ORG="DevSecOpsBr"
      password_policy="db_password"
   vault read database/creds/readonly
   vault write database/config/postgresql \
-    username_template="myorg-{{.RoleName}}-{{unix_time}}-{{random 8}}"
+    username_template="devsecops-{{.RoleName}}-{{unix_time}}-{{random 8}}"
   vault read database/creds/readonly
 
 )

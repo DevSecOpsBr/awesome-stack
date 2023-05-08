@@ -4,8 +4,10 @@ USERNAME=drone_user
 PASSWORD=drone_password
 PG_DB=postgres
 
-CONTAINER_DB=$(docker container ps -f=name=droneci_db -q)
 POLICIES="../policies"
+ROLES="../roles"
+CONTAINER_DB=$(docker container ps -f=name=droneci_db -q)
+
 GH_ORG="DevSecOpsBr"
 
 (
@@ -15,7 +17,7 @@ GH_ORG="DevSecOpsBr"
   docker container exec -it $CONTAINER_DB psql -U $USERNAME $PG_DB -c "CREATE DATABASE junttus;"
 
   vault secrets enable database
-  vault secrets list -detailed
+  vault secrets list
   sleep 5
 
   POSTGRES_URL='droneci_db'
@@ -27,18 +29,11 @@ GH_ORG="DevSecOpsBr"
   password="$PASSWORD"
   sleep 5
 
-  tee readonly.sql <<EOF
-CREATE ROLE "{{name}}" WITH LOGIN PASSWORD '{{password}}' VALID UNTIL '{{expiration}}' INHERIT;
-GRANT ro TO "{{name}}";
-GRANT SELECT ON ALL TABLES IN SCHEMA public TO "{{name}}";
-EOF
-
   vault write database/roles/readonly \
   db_name=postgresql \
-  creation_statements=@readonly.sql \
+  creation_statements=@$ROLES/readonly.sql \
   default_ttl=1h \
   max_ttl=24h
-  rm readonly.sql
 
   vault read database/creds/readonly
 
@@ -53,30 +48,7 @@ EOF
   vault lease revoke -prefix database/creds/readonly
   vault list sys/leases/lookup/database/creds/readonly
 
-  tee db_password_policy.hcl <<EOF
-length=20
-
-rule "charset" {
-  charset = "abcdefghijklmnopqrstuvwxyz"
-  min-chars = 1
-}
-
-rule "charset" {
-  charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-  min-chars = 1
-}
-
-rule "charset" {
-  charset = "0123456789"
-  min-chars = 1
-}
-
-rule "charset" {
-  charset = "!@#$%^&*"
-  min-chars = 1
-}
-EOF
-  vault write sys/policies/password/db_password policy=@db_password_policy.hcl
+  vault write sys/policies/password/db_password policy=@$POLICIES/db_password.hcl
   vault read sys/policies/password/db_password/generate
   vault write database/config/postgresql \
      password_policy="db_password"
@@ -84,7 +56,7 @@ EOF
   vault write database/config/postgresql \
     username_template="myorg-{{.RoleName}}-{{unix_time}}-{{random 8}}"
   vault read database/creds/readonly
-  rm db_password_policy.hcl
+
 )
 
 (

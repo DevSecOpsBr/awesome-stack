@@ -20,9 +20,10 @@ services:
       - "traefik.tcp.services.vault-server.loadbalancer.server.port=8200"
     volumes:
       - ./config/:/vault/config/:rw
-    command: "vault server -config /vault/config/ -log-level=debug"
+      - ./policies/:/vault/config/policies:rw
+    command: "vault server -config /vault/config/"
     deploy:
-      replicas: 1
+      replicas: 3
       mode: replicated
       placement:
         constraints: [node.role == manager]
@@ -37,8 +38,6 @@ services:
       resources:
         limits:
           memory: 1G
-    ports:
-      - 8200:8200
     networks:
       - docker2docker
       

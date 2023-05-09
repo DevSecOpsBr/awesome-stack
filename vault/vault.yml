@@ -6,7 +6,7 @@ services:
     image: vault:latest
     working_dir: /vault/config/
     environment:
-      VAULT_ADDR: http://server:8200
+      # VAULT_ADDR: http://server:8200
       VAULT_ROOT_TOKEN_ID: protectme
       SERVICE_NAME: vault
       SERVICE_TAGS: vault, seal, encrypt
@@ -16,14 +16,13 @@ services:
       - "traefik.docker.lbswarm=false"
       - "traefik.docker.network=docker2docker"
       - "traefik.tcp.routers.vault-server.entrypoints=web"
-      - "traefik.tcp.routers.vault-server.rule=Host(`vault.docker.local`)"
+      - "traefik.tcp.routers.vault-server.rule=Host(`vault-server.docker.local`)"
       - "traefik.tcp.services.vault-server.loadbalancer.server.port=8200"
     volumes:
       - ./config/:/vault/config/:rw
-      - ./policies/:/vault/config/policies:rw
     command: "vault server -config /vault/config/"
     deploy:
-      replicas: 3
+      replicas: 1
       mode: replicated
       placement:
         constraints: [node.role == manager]
@@ -38,9 +37,11 @@ services:
       resources:
         limits:
           memory: 1G
+    ports:
+      - 8200:8200
     networks:
       - docker2docker
-      
+
 networks:
   docker2docker:
       external: true

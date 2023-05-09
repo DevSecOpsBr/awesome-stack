@@ -6,10 +6,11 @@
     "datacenter": "DC1",
     "leave_on_terminate" : true,
     "skip_leave_on_interrupt" : true,
-    
+
+    "retry_join": ["consul_clients", "clients"],
     "server" : true,
     "ui" : true,
-    
+
     "autopilot": {
       "cleanup_dead_servers": true
     },

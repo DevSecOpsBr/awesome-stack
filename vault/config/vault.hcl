@@ -16,10 +16,10 @@ storage "consul" {
   token         = "01f47f9e-f989-966b-9acc-f88fde2e7f9f"
   path          = "vault/"
   scheme        = "http"
-  service       = "vault"
   check_timeout = "60s"
+  service_tags  = "vault, dockerswarm"
 }
 
 # HA settings
-api_addr        = "http://127.0.0.1:8200"
-cluster_addr    = "http://127.0.0.1:8201"
+api_addr        = "http://vault_server:8200"
+cluster_addr    = "http://vault_server:8201"

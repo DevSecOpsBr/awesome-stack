@@ -13,27 +13,25 @@ services:
 
     # Deployment information
     deploy:
-        replicas: 1
-        update_config:
-            parallelism: 2
-            delay: 10s
-        restart_policy:
-            condition: on-failure
-        endpoint_mode: vip
-        labels:
-            com.example.description: "Adminer Database"
-
-    #     # Resource limits 
-    #     resources:
-    #         limits:
-    #             cpus: '1.0'
-    #             memory: 2.0G
-    #         reservations:
-    #             cpus: '0.50'
-    #             memory: 500M
-
-    ports:
-      - 8008:8080
+      replicas: 1
+      update_config:
+          parallelism: 1
+          delay: 10s
+      restart_policy:
+          condition: on-failure
+      endpoint_mode: vip
+      labels:
+        - traefik.enable=true
+        - traefik.docker.lbswarm=true
+        - traefik.docker.network=docker2docker
+        - traefik.http.routers.adminer.entrypoints=web,websecure
+        - traefik.http.routers.adminer.rule=Host(`adminer.docker.local`)
+        - traefik.http.services.adminer.loadbalancer.server.port=8080
+      # Resource limits 
+      resources:
+        limits:
+            cpus: '1.0'
+            memory: 500M
     networks:
       - docker2docker
 
@@ -42,31 +40,23 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: example
-# metadata to registrator
       SERVICE_NAME: mysql
       SERVICE_TAGS: dbs,mysql
 
     # Deployment information
     deploy:
-        replicas: 1
-        update_config:
-            parallelism: 2
-            delay: 10s
-        restart_policy:
-            condition: on-failure
-        endpoint_mode: vip
-        labels:
-            com.example.description: "MySQL Database"
-
-        # Resource limits 
-        resources:
-            limits:
-                cpus: '1.0'
-                memory: 2.0G
-            reservations:
-                cpus: '0.50'
-                memory: 500M
-
+      replicas: 1
+      update_config:
+          parallelism: 1
+          delay: 10s
+      restart_policy:
+          condition: on-failure
+      endpoint_mode: vip
+      # Resource limits 
+      resources:
+        limits:
+            cpus: '1.0'
+            memory: 500M
     volumes:
       - "mysqld:/var/lib/mysql"
     ports:
@@ -80,32 +70,23 @@ services:
     environment:
       POSTGRES_PASSWORD: example
       PGDATA: /database
-      
-    # metadata to registrator
       SERVICE_NAME: postgresql
       SERVICE_TAGS: dbs,postgresql
       
     # Deployment information
     deploy:
-        replicas: 1
-        update_config:
-            parallelism: 2
-            delay: 10s
-        restart_policy:
-            condition: on-failure
-        endpoint_mode: vip
-        labels:
-            com.example.description: "PostgreSQL Database"
-
-    #     # Resource limits 
-    #     resources:
-    #         limits:
-    #             cpus: '1.0'
-    #             memory: 2.0G
-    #         reservations:
-    #             cpus: '0.50'
-    #             memory: 500M
-
+      replicas: 0
+      update_config:
+          parallelism: 1
+          delay: 10s
+      restart_policy:
+          condition: on-failure
+      endpoint_mode: vip
+      # Resource limits 
+      resources:
+          limits:
+              cpus: '1.0'
+              memory: 500M
     volumes:
       - "postgresql:/var/lib/postgresql/data"
     ports:
@@ -113,7 +94,6 @@ services:
     networks:
       - docker2docker
 
-      
 networks:
     docker2docker:
         external: true

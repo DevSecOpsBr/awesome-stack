@@ -13,7 +13,7 @@ services:
       - --traefik.docker.swarm-mode
       - --traefik.tls.insecure=true
     deploy:
-      replicas: 1
+      replicas: 0
       update_config:
         parallelism: 1
         failure_action: rollback
@@ -79,4 +79,4 @@ services:
 
 networks:
   docker2docker:
-      external: true
+    external: true

@@ -58,4 +58,5 @@ teamcity/configs/database/datadir
 !gocd/godata/server/config/cruise-config.xml
 gocd/godata/server/*
 
+# DroneCI sensitive files
 droneci/.secrets/*.env

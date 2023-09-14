@@ -60,3 +60,6 @@ gocd/godata/server/*
 
 # DroneCI sensitive files
 droneci/.secrets/*.env
+
+# Webhookrelay sensitive files
+webhookrelay/.env/*.env

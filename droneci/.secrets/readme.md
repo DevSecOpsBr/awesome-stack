@@ -13,5 +13,5 @@ for s in $(find * -type f -print); do age -d -i ~/.ssh/id_rsa -o $(ls $s | awk -
 #### Encypting
 
 ```(shell)
-WIP
+for s in $(find . -type f -print | egrep ".env$"); do age -e -R ~/.ssh/id_rsa.pub -o $s.age $s && rm $s; done
 ```

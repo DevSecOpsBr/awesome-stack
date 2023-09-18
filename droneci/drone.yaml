@@ -67,7 +67,7 @@ services:
     networks:
       - docker2docker
 
-  runner:
+  runner_bb:
     image: drone/drone-runner-docker:1
     command: agent
     deploy:
@@ -75,9 +75,9 @@ services:
         - traefik.enable=true
         - traefik.docker.network=docker2docker
         - traefik.docker.lbswarm=true
-        - traefik.http.routers.runner.entrypoints=web
-        - traefik.http.routers.runner.rule=Host(`droneci-runner.docker.local`) && PathPrefix(`/dashboard`)
-        - traefik.http.services.runner.loadbalancer.server.port=3000
+        - traefik.http.routers.runner_bb.entrypoints=web
+        - traefik.http.routers.runner_bb.rule=Host(`droneci-runner-bb.docker.local`) && PathPrefix(`/dashboard`)
+        - traefik.http.services.runner_bb.loadbalancer.server.port=3000
       mode: replicated
       replicas: 1
       placement:
@@ -88,8 +88,37 @@ services:
       restart_policy:
         condition: on-failure
     env_file:
-      - ./.env/runner.env
-      - ./.secrets/runner.env
+      - ./.env/runner_bb.env
+      - ./.secrets/runner_bb.env
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks: 
+      - docker2docker
+
+  runner_gh:
+    image: drone/drone-runner-docker:1
+    command: agent
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.docker.network=docker2docker
+        - traefik.docker.lbswarm=true
+        - traefik.http.routers.runner_gh.entrypoints=web
+        - traefik.http.routers.runner_gh.rule=Host(`droneci-runner-gh.docker.local`) && PathPrefix(`/dashboard`)
+        - traefik.http.services.runner_gh.loadbalancer.server.port=3000
+      mode: replicated
+      replicas: 1
+      placement:
+        max_replicas_per_node: 3
+      update_config:
+        parallelism: 1
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+    env_file:
+      - ./.env/runner_gh.env
+      - ./.secrets/runner_gh.env
     restart: always
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock

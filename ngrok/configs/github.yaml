@@ -8,7 +8,7 @@ heartbeat_tolerance: 5s
 log_level: info
 log_format: logfmt
 region: auto
-remote_management: false
+remote_management: true
 # root_cas: trusted
 update_channel: stable
 update_check: true

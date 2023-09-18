@@ -38,12 +38,6 @@ services:
   mysql:
     image: mysql:latest
     restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: example
-      SERVICE_NAME: mysql
-      SERVICE_TAGS: dbs,mysql
-
-    # Deployment information
     deploy:
       replicas: 1
       update_config:
@@ -52,11 +46,9 @@ services:
       restart_policy:
           condition: on-failure
       endpoint_mode: vip
-      # Resource limits 
-      resources:
-        limits:
-            cpus: '1.0'
-            memory: 500M
+    env_file:
+      - ./.envs/mysql.env
+      - ./.secrets/mysql.env
     volumes:
       - "mysqld:/var/lib/mysql"
     ports:
@@ -67,36 +59,28 @@ services:
   postgres:
     image: postgres
     restart: always
-    environment:
-      POSTGRES_PASSWORD: example
-      PGDATA: /database
-      SERVICE_NAME: postgresql
-      SERVICE_TAGS: dbs,postgresql
-      
-    # Deployment information
     deploy:
-      replicas: 0
+      replicas: 1
       update_config:
           parallelism: 1
           delay: 10s
       restart_policy:
           condition: on-failure
       endpoint_mode: vip
-      # Resource limits 
-      resources:
-          limits:
-              cpus: '1.0'
-              memory: 500M
+    env_file:
+      - ./.envs/postgres.env
+      - ./.secrets/postgres.env
     volumes:
       - "postgresql:/var/lib/postgresql/data"
+      - ./configs/droneci_databases.sh:/docker-entrypoint-initdb.d/droneci_databases.sh:rw
     ports:
       - 5432:5432
     networks:
       - docker2docker
 
 networks:
-    docker2docker:
-        external: true
+  docker2docker:
+      external: true
     
 volumes:
   postgresql:

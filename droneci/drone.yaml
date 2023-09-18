@@ -2,35 +2,6 @@ version: "3.9"
 
 services:
 
-  db:
-    image: postgres
-    deploy:
-      labels:
-        - traefik.enable=false
-      mode: replicated
-      replicas: 1
-      placement:
-        max_replicas_per_node: 1
-      update_config:
-        parallelism: 1
-        delay: 10s
-      restart_policy:
-        condition: on-failure
-      resources:
-        reservations:
-          cpus: '0.25'
-          memory: 20M
-    env_file:
-      - ./.env/postgre.env
-      - ./.secrets/postgre.env
-    restart: always
-    volumes:
-      - db:/var/lib/postgresql/data
-    ports:
-      - 5432:5432
-    networks:
-      - docker2docker
-
   server_bitbucket:
     image: drone/drone:2
     deploy:
@@ -39,23 +10,21 @@ services:
         - traefik.docker.lbswarm=true
         - traefik.docker.network=docker2docker
         - traefik.http.routers.bitbucket.entrypoints=web,websecure
-        - traefik.http.routers.bitbucket.rule=Host(`droneci-bb.local`)
+        - traefik.http.routers.bitbucket.rule=Host(`droneci-bb.docker.local`)
         - traefik.http.services.bitbucket.loadbalancer.server.port=80
       mode: replicated
       replicas: 1
       placement:
         max_replicas_per_node: 1
+      endpoint_mode: vip
       update_config:
         parallelism: 1
         delay: 10s
       restart_policy:
         condition: on-failure
-      resources:
-        limits:
-          cpus: '0.90'
-          memory: 1G
     environment:
       - DRONE_SERVER_HOST=${TRAEFIK_HUB_BB}
+      - POSTGRES_PASSWORD=${POSTGRES_ROOT}
     env_file: 
       - ./.env/bitbucket.env
       - ./.secrets/bitbucket.env
@@ -73,24 +42,22 @@ services:
         - traefik.docker.lbswarm=true
         - traefik.docker.network=docker2docker
         - traefik.http.routers.github.entrypoints=web,websecure
-        - traefik.http.routers.github.rule=Host(`droneci-gh.local`)
+        - traefik.http.routers.github.rule=Host(`droneci-gh.docker.local`)
         - traefik.http.services.github.loadbalancer.server.port=80
       mode: replicated
       replicas: 1
       placement:
         max_replicas_per_node: 1
+      endpoint_mode: vip
       update_config:
         parallelism: 1
         failure_action: rollback
         delay: 10s
       restart_policy:
         condition: on-failure
-      resources:
-        limits:
-          cpus: '0.90'
-          memory: 1G
     environment:
       - DRONE_SERVER_HOST=${TRAEFIK_HUB_GH}
+      - POSTGRES_PASSWORD=${POSTGRES_ROOT}
     env_file: 
       - ./.env/github.env
       - ./.secrets/github.env
@@ -108,9 +75,9 @@ services:
         - traefik.enable=true
         - traefik.docker.network=docker2docker
         - traefik.docker.lbswarm=true
-        - traefik.http.routers.dashboard.entrypoints=web
-        - traefik.http.routers.dashboard.rule=Host(`droneci.local`) && PathPrefix(`/dashboard`)
-        - traefik.http.services.dashboard.loadbalancer.server.port=3000
+        - traefik.http.routers.runner.entrypoints=web
+        - traefik.http.routers.runner.rule=Host(`droneci-runner.docker.local`) && PathPrefix(`/dashboard`)
+        - traefik.http.services.runner.loadbalancer.server.port=3000
       mode: replicated
       replicas: 1
       placement:
@@ -120,10 +87,6 @@ services:
         delay: 10s
       restart_policy:
         condition: on-failure
-      resources:
-        limits:
-          cpus: '0.90'
-          memory: 1G
     env_file:
       - ./.env/runner.env
       - ./.secrets/runner.env

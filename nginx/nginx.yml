@@ -3,54 +3,68 @@ version: '3.6'
 services:
 
   portal1:
-    image: jwilder/whoami
+    image: traefik/whoami
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.docker.lbswarm=true
+        - traefik.docker.network=docker2docker
+        - traefik.http.routers.portal1.entrypoints=web,websecure
+        - traefik.http.routers.portal1.rule=Host(`portal.docker.local`)
+        - traefik.http.services.portal1.loadbalancer.server.port=80
+        - "traefik.http.middlewares.latency-check.circuitbreaker.expression=LatencyAtQuantileMS(50.0) > 100"
+      replicas: 1
+      endpoint_mode: vip
+      update_config:
+        parallelism: 1
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 500M
     environment:
       SERVICE_NAME: portal1
       SERVICE_TAGS: blue
-    labels:
-      - "traefik.enable=true"
-      - "traefik.port=8000"
-      - "traefik.weight=30"
-      - "traefik.backend=portal2"
-      - "traefik.tags=blue"
-      - "traefik.backend.loadbalancer.method=drr"
-      - "traefik.backend.loadbalancer.stickiness=true"
-      - "traefik.frontend.rule=Host:portal.ellesmera.com"
-      - "traefik.backend.loadbalancer.stickiness.cookieName=blue_cookie"
-    deploy:
-      replicas: 1
-      endpoint_mode: dnsrr
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
     networks:
       - docker2docker
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "200k"
-        max-file: "10"
 
   portal2:
-    image: jwilder/whoami
+    image: traefik/whoami
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.docker.lbswarm=true
+        - traefik.docker.network=docker2docker
+        - traefik.http.routers.portal2.entrypoints=web,websecure
+        - traefik.http.routers.portal2.rule=Host(`portal.docker.local`)
+        - traefik.http.services.portal2.loadbalancer.server.port=80
+        - "traefik.http.middlewares.latency-check.circuitbreaker.expression=LatencyAtQuantileMS(50.0) > 100"
+      replicas: 1
+      endpoint_mode: vip
+      update_config:
+        parallelism: 1
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 500M
     environment:
-      SERVICE_NAME: portal2
-      SERVICE_TAGS: green
-    labels:
-      - "traefik.enable=true"
-      - "traefik.port=8000"
-      - "traefik.backend=portal2"
-      - "traefik.tags=green"
-      - "traefik.weight=30"
-      - "traefik.backend.loadbalancer.method=drr"
-      - "traefik.backend.loadbalancer.stickiness=true"
-      - "traefik.frontend.rule=Host:portal.ellesmera.com"
-      - "traefik.backend.loadbalancer.stickiness.cookieName=green_cookie"
+      SERVICE_NAME: portal1
+      SERVICE_TAGS: blue
     logging:
       driver: "json-file"
       options:
         max-size: "200k"
         max-file: "10"
-    deploy:
-      replicas: 1
-      endpoint_mode: dnsrr
     networks:
       - docker2docker
 

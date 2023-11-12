@@ -33,5 +33,5 @@ for s in $(find . -type f -print -execdir .secrets {} \; | egrep ".env$"); do ag
 The below command find for files ending with `.age` under `.secrets` folder(only) decrypting it.
 
 ```(shell)
-for s in $(find * -type f -print -execdir .secrets {} \;); do age -d -i ~/.ssh/id_rsa -o $(ls $s | awk -F '.' '{ print $1}')\.env $s ; done
+for s in $(find * -type f -print -execdir secrets {} +); do age -d -i ~/.ssh/id_rsa -o $(ls $s | awk -F '.' '{ print $1}')\.env $s ; done
 ```

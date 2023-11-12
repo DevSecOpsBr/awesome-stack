@@ -24,8 +24,8 @@ services:
         condition: on-failure
       resources:
         limits:
-          cpus: '0.90'
-          memory: 1G
+            cpus: '1.0'
+            memory: 500M
     command:
       - "start"
       - "--all"
@@ -61,8 +61,8 @@ services:
         condition: on-failure
       resources:
         limits:
-          cpus: '0.90'
-          memory: 1G
+          cpus: '1.0'
+          memory: 500M
     command:
       - "start"
       - "--all"

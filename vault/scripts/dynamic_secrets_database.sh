@@ -1,13 +1,17 @@
 #!/bin/bash
 
-USERNAME=drone_user
-PASSWORD=drone_password
-PG_DB=postgres
+#  Database settings
+POSTGRES_URL='db_postgres'
+CONTAINER_DB=$(docker container ps -f=name=db_postgres -q)
+USERNAME="root"
+PASSWORD=${POSTGRES_ROOT}
+PG_DB="postgres"
 
+# Vault politicies
 POLICIES="../policies"
 ROLES="../roles"
-CONTAINER_DB=$(docker container ps -f=name=droneci_db -q)
 
+# Github settings
 GH_ORG="DevSecOpsBr"
 
 (
@@ -19,14 +23,13 @@ GH_ORG="DevSecOpsBr"
   vault secrets enable database
   vault secrets list
 
-  POSTGRES_URL='droneci_db'
   vault write database/config/postgresql \
   plugin_name=postgresql-database-plugin \
   connection_url="postgresql://{{username}}:{{password}}@$POSTGRES_URL/$PG_DB?sslmode=disable" \
   allowed_roles=* \
   username="$USERNAME" \
   password="$PASSWORD"
-  sleep 5
+  sleep 10
 
   vault write database/roles/readonly \
   db_name=postgresql \

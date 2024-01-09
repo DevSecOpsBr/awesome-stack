@@ -3,7 +3,7 @@ version: '3.9'
 services:
 
   server:
-    image: vault:latest
+    image: vault:1.13.3
     working_dir: /vault/config/
     environment:
       # VAULT_ADDR: http://server:8200

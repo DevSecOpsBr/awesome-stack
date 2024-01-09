@@ -63,3 +63,9 @@ droneci/.secrets/*.env
 
 # Webhookrelay sensitive files
 webhookrelay/.env/*.env
+
+# Ngrok
+ngrok/.secrets/*.env
+
+# Databases
+database/.secrets/*.env

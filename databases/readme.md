@@ -8,30 +8,34 @@ Adminer is a tool for managing content in MySQL databases. Adminer is distribute
 
 ### Prerequisites
 
-```
-Last version of docker in a swarm mode to using that stack
-```
+> Last version of docker in a swarm mode to using that stack
 
 ### Stack
+
 That stack contain an adminer service to manager your mysql and postgres using an WebUI
 MySQL server with a simple setup to support your applications to persist data onto.
 PostgreSQL server with a simple setup to support your applications to persist data onto.
 
 ### Running
-```
+
+```(shell)
 docker stack deploy -c dbs.yml db
 ```
 
 ### Checking
-```
+
+```(shell)
 docker service ls
 ```
+
 or
-```
+
+```(shell)
 docker stack ls
 ```
 
 ### Authors
+
 Rodrigo Carvalho
 DevOps Engineering
 Skype: rdgacarvalho

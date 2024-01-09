@@ -3,7 +3,7 @@ version: '3.9'
 services:
 
   clients:
-    image: consul:latest
+    image: consul:1.15.4
     labels:
       - "SERVICE_IGNORE=false"
       # Traefik proxy settings
@@ -32,7 +32,7 @@ services:
       - docker2docker
 
   servers:
-    image: consul:latest
+    image: consul:1.15.4
     labels:
       - "SERVICE_IGNORE=false"
       # Traefik proxy settings
@@ -66,7 +66,7 @@ services:
       - docker2docker
       
   server_bootstrap:
-    image: consul:latest
+    image: consul:1.15.4
     environment:
       CONSUL_UI_BETA: "true"
     working_dir: /consul/config/

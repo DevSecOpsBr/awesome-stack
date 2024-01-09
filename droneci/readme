@@ -1,0 +1,33 @@
+# DroneCI
+
+## Drone tokens
+
+Get your access token by accessing below URL.
+
+```(html)
+https://moving-whale-humbly.ngrok-free.app/
+```
+
+Than go to Account Setting at bottom left and grab your personal token.
+
+E.g:
+```(text)
+export DRONE_SERVER=https://moving-whale-humbly.ngrok-free.app
+export DRONE_TOKEN=xxxx-xxx-xxx-xxx-xxxxx
+drone info
+```
+
+Checking if you are authenticated by following below command
+
+| drone info
+
+### Setting the droneCI server
+
+Run below commands to sync, active and update repositories into DroneCI.
+
+```(shell)
+drone repo ls |grep "rdgacarvalho" | xargs -L1 drone repo sync && \
+drone repo ls | grep rdgacarvalho | xargs -L1 drone repo enable && \
+drone repo ls | grep rdgacarvalho | xargs -L1 drone repo update --trusted
+drone repo ls | grep rdgacarvalho 
+```

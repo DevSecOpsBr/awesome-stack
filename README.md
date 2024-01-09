@@ -6,7 +6,6 @@ Here you'll find some Docker Compose files to use in a production environment Do
 
 The main goal is show the best practices and try create a stable and realiable environment that we can.
 
-
 ## Age section
 
 age is a simple, modern and secure file encryption tool, format, and Go library.
@@ -20,7 +19,7 @@ $ tar cvz ~/data | age -r age1ql3z7hjy54pw3hyww5ayyfg7zqgvc7w3j2elw8zmrj2kg5sfn9
 $ age --decrypt -i key.txt data.tar.gz.age > data.tar.gz
 ```
 
-#### Ecrypting files
+### Ecrypting files
 
 The below command find for files ending with `.env` under `.secrets` folder(only) encrypting and remove it afterwards.
 

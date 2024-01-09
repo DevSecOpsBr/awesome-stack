@@ -30,20 +30,20 @@ docker stack ls
 
 ### Unseal vault
 
-To unseal vault just run the command below
+To unseal vault just run the command below.
 
 ```(shell)
 docker container exec -ti <container-id> vault operator init
 ```
 
 The output will show you all the keys and token to unseal vault. Save the output in a safe place.
-Once you have all information is time to unseal vault follow the steps
+Once you have all information is time to unseal vault follow the steps.
 
 ```(html)
 http://<ip_of_your_docker_node>:8200/ui
 ```
 
-When asked by the key please provider one by one till be asked by the token. 
+When asked by the key please provider one by one till be asked by the token.
 Done your vault is unseal and ready to use and completly integrated with consul as storage backend.
 
 ### Authors

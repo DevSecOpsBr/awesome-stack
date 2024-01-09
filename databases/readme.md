@@ -2,7 +2,7 @@
 
 ## Getting Started
 
-MySQL is an open-source relational database management system. 
+MySQL is an open-source relational database management system.
 PostgreSQL, often simply Postgres, is an object-relational database management system with an emphasis on extensibility and standards compliance
 Adminer is a tool for managing content in MySQL databases. Adminer is distributed under Apache license in a form of a single PHP file.
 

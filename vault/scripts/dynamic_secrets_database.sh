@@ -21,6 +21,7 @@ GH_ORG="DevSecOpsBr"
   docker container exec -it $CONTAINER_DB psql -U $USERNAME $PG_DB -c "CREATE DATABASE junttus;"
 
   vault secrets enable database
+
   vault secrets list
 
   vault write database/config/postgresql \
@@ -29,25 +30,29 @@ GH_ORG="DevSecOpsBr"
   allowed_roles=* \
   username="$USERNAME" \
   password="$PASSWORD"
-  sleep 10
 
   vault write database/roles/readonly \
   db_name=postgresql \
   creation_statements=@$ROLES/readonly.sql \
-  default_ttl=1h \
-  max_ttl=24h
+  default_ttl=5m \
+  max_ttl=7m
 
   vault read database/creds/readonly
 
   docker container exec -it $CONTAINER_DB psql -U $USERNAME $PG_DB -c "SELECT usename, valuntil FROM pg_user;"
 
   vault write sys/policies/password/db_password policy=@$POLICIES/db_password.hcl
+
   vault read sys/policies/password/db_password/generate
+
   vault write database/config/postgresql \
      password_policy="db_password"
+
   vault read database/creds/readonly
+
   vault write database/config/postgresql \
     username_template="devops-{{.RoleName}}-{{unix_time}}-{{random 8}}"
+
   vault read database/creds/readonly
 
 )

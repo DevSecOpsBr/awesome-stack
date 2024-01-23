@@ -14,12 +14,13 @@ services:
     # Deployment information
     deploy:
       replicas: 1
+      mode: replicated
+      endpoint_mode: vip
       update_config:
           parallelism: 1
           delay: 10s
       restart_policy:
           condition: on-failure
-      endpoint_mode: vip
       labels:
         - traefik.enable=true
         - traefik.docker.lbswarm=true
@@ -36,7 +37,7 @@ services:
       - docker2docker
 
   mysql:
-    image: mysql:latest
+    image: mysql
     restart: always
     deploy:
       replicas: 1
@@ -45,14 +46,13 @@ services:
           delay: 10s
       restart_policy:
           condition: on-failure
-      endpoint_mode: vip
+      labels:
+        - traefik.enable=false
     env_file:
       - ./.envs/mysql.env
       - ./.secrets/mysql.env
-    volumes:
-      - "mysqld:/var/lib/mysql"
     ports:
-      - 3306:3306
+      - 3306
     networks:
       - docker2docker
 
@@ -66,7 +66,8 @@ services:
           delay: 10s
       restart_policy:
           condition: on-failure
-      endpoint_mode: vip
+      labels:
+        - traefik.enable=false
     env_file:
       - ./.envs/postgres.env
       - ./.secrets/postgres.env
@@ -74,7 +75,7 @@ services:
       - "postgresql:/var/lib/postgresql/data"
       - ./configs/droneci_databases.sh:/docker-entrypoint-initdb.d/droneci_databases.sh:rw
     ports:
-      - 5432:5432
+      - 5432
     networks:
       - docker2docker
 
@@ -85,6 +86,5 @@ networks:
 volumes:
   postgresql:
     external: true
-
   mysqld:
     external: true

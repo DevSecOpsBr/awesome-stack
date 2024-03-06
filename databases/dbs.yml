@@ -28,7 +28,6 @@ services:
         - traefik.http.routers.adminer.entrypoints=web,websecure
         - traefik.http.routers.adminer.rule=Host(`adminer.docker.local`)
         - traefik.http.services.adminer.loadbalancer.server.port=8080
-      # Resource limits 
       resources:
         limits:
             cpus: '1.0'
@@ -40,7 +39,7 @@ services:
     image: mysql
     restart: always
     deploy:
-      replicas: 1
+      replicas: 0
       update_config:
           parallelism: 1
           delay: 10s
@@ -51,6 +50,8 @@ services:
     env_file:
       - ./.envs/mysql.env
       - ./.secrets/mysql.env
+    volumes:
+      - mysqld:/var/lib/mysql
     ports:
       - 3306
     networks:

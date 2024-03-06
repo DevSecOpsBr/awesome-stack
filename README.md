@@ -6,6 +6,21 @@ Here you'll find some Docker Compose files to use in a production environment Do
 
 The main goal is show the best practices and try create a stable and realiable environment that we can.
 
+## Docker swarm & network
+
+Initialize docker swarm cluster
+
+```(shell)
+docker swarm init
+docker swarm join ...
+```
+
+Create a docker2docker network to allow comminication between containers
+
+```(shell)
+docker network create docker2docker --subnet 10.1.0.1/16 --driver overlay --attachable
+```
+
 ## Age section
 
 age is a simple, modern and secure file encryption tool, format, and Go library.

@@ -1,7 +1,7 @@
 image: atlassian/default-image:4
 
 clone:
-  enabled: false
+  enabled: true
 
 pipelines:
   branches:
@@ -9,5 +9,6 @@ pipelines:
       - step:
           name: 'Mirror repository to GitLab'
           script:
+            - cd ${BITBUCKET_REPO_SLUG}.git
             - pwd && ls -ld
             - git push --mirror git@gitlab.com:devsecopsbr1/docker.git

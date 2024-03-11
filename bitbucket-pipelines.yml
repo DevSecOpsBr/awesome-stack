@@ -2,6 +2,7 @@ image: atlassian/default-image:4
 
 clone:
   enabled: true
+  depth: full
 
 pipelines:
   branches:

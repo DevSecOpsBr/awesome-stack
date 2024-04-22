@@ -26,9 +26,8 @@ services:
         limits:
           cpus: '1.0'
           memory: 500M
-    environment:
-      - DRONE_SERVER_HOST=${TRAEFIK_HUB_BB}
-      - POSTGRES_PASSWORD=${POSTGRES_ROOT}
+    # environment:
+    #   - POSTGRES_PASSWORD=${POSTGRES_ROOT}
     env_file: 
       - ./.env/bitbucket.env
       - ./.secrets/bitbucket.env
@@ -63,9 +62,8 @@ services:
         limits:
           cpus: '1.0'
           memory: 500M
-    environment:
-      - DRONE_SERVER_HOST=${TRAEFIK_HUB_GH}
-      - POSTGRES_PASSWORD=${POSTGRES_ROOT}
+    # environment:
+    #   - POSTGRES_PASSWORD=${POSTGRES_ROOT}
     env_file: 
       - ./.env/github.env
       - ./.secrets/github.env
@@ -87,7 +85,7 @@ services:
         - traefik.http.routers.runner.rule=Host(`droneci-runner.docker.local`) && PathPrefix(`/dashboard`)
         - traefik.http.services.runner.loadbalancer.server.port=3000
       mode: replicated
-      replicas: 1
+      replicas: 2
       placement:
         max_replicas_per_node: 1
       update_config:

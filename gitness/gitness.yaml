@@ -1,0 +1,46 @@
+version: "3.9"
+
+services:
+
+  server:
+    image: harness/gitness
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.docker.lbswarm=true
+        - traefik.docker.network=docker2docker
+        - traefik.http.routers.gitness.entrypoints=web,websecure
+        - traefik.http.routers.gitness.rule=Host(`gitness.docker.local`)
+        - traefik.http.services.gitness.loadbalancer.server.port=3000
+      mode: replicated
+      replicas: 1
+      placement:
+        max_replicas_per_node: 1
+      endpoint_mode: vip
+      update_config:
+        parallelism: 1
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 500M
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - gitness-data:/data
+    env_file:
+      - ./envs/settings.env
+      - ./secrets/postgres.env
+    networks:
+      - docker2docker
+
+volumes:
+  gitness-data:
+    external: true
+
+networks: 
+  docker2docker:
+    external: true
+

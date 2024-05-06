@@ -32,3 +32,10 @@ drone repo ls | grep rdgacarvalho | xargs -L1 drone repo enable && \
 drone repo ls | grep rdgacarvalho | xargs -L1 drone repo update --trusted
 drone repo ls | grep rdgacarvalho 
 ```
+
+```(secret)
+drone orgsecret add --allow-pull-request rdgacarvalho slack_deploys_hook https://hooks.slack.com/services/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
+drone orgsecret add --allow-pull-request rdgacarvalho slack_kubernetes_hook https://hooks.slack.com/services/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
+drone orgsecret add --allow-pull-request rdgacarvalho slack_web_hook aHR0cHM6Ly9ob29rcy5zbGFjay5jb20vc2VydmljZXMvVDAxTVY4RExBOE0vQjA1VE5ITUpRMFkvNUpXMjJMQWptb1Y1c0V5bEVmMDFyQ1lRCg==
+drone orgsecret add --allow-pull-request rdgacarvalho slack_terraform_hook https://hooks.slack.com/services/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
+```

@@ -1,5 +1,7 @@
 # Docker
 
+[![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit)](https://github.com/pre-commit/pre-commit)
+
 ## Welcome to my repository
 
 Here you'll find some Docker Compose files to use in a production environment Docker Swarm Cluster

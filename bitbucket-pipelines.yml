@@ -1,14 +1,24 @@
-image: atlassian/default-image:4
+image:
+  name: atlassian/default-image:3
 
 clone:
-  enabled: true
-  depth: full
+  depth: 1
+options:
+  max-time: 60
+  docker: true
+  size: 2x
 
 pipelines:
-  branches:
-    master:
+  # Recommended: run infracost on pull requests and new commits to them.
+  pull-requests:
+    '**':
+
       - step:
-          name: 'Mirror repository to GitLab'
+          name: "Mirroring repository to Github & Gitlab"
+          clone:
+            enabled: true
+            lfs: false
+            depth: 5
           script:
-            - pwd && ls -ld
-            - git push --mirror git@gitlab.com:devsecopsbr1/docker.git
+            - git push --all --porcelain --thin -f git@gitlab.com:devsecopsbr1/docker.git
+            - git push --all --porcelain --thin -f git@github.com:DevSecOpsBr/docker.git

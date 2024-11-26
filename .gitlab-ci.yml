@@ -1,0 +1,17 @@
+stages:
+  - cleanup
+
+cleanup_subbranches:
+  stage: cleanup
+  only:
+    - master # Run only when changes are pushed to the master branch
+  script:
+    - echo "Fetching all remote branches..."
+    - git fetch --prune
+    - echo "Listing and deleting all subbranches..."
+    - |
+      branches=$(git branch -r | grep -v 'origin/HEAD' | grep -v 'origin/master' | sed 's/origin\///')
+      for branch in $branches; do
+        echo "Deleting branch $branch"
+        git push origin --delete $branch || echo "Failed to delete $branch"
+      done

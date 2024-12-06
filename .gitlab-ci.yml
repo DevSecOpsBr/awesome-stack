@@ -6,6 +6,9 @@ cleanup_subbranches:
   only:
     - master # Run only when changes are pushed to the master branch
   script:
+    - echo "Git setting"
+    - git remote remove origin
+    - git remote add origin https://$GITLAB_USERNAME:$GITLAB_TOKEN@$CI_SERVER_HOST/$CI_PROJECT_PATH.git
     - echo "Fetching all remote branches..."
     - git fetch --prune
     - echo "Listing and deleting all subbranches..."

@@ -1,9 +1,14 @@
-version: "3.6"
+version: "3.8"
 
 services:
   server:
     image: docker.io/gitea/gitea:1.22.6
     restart: always
+    privileged: true
+    cap_add:
+      - SYS_ADMIN
+      - NET_ADMIN
+      - NET_BIND_SERVICE
     deploy:
       labels:
         - traefik.enable=true
@@ -22,18 +27,49 @@ services:
         condition: on-failure
     environment:
       - USER_UID=1000
-      - USER_GID=1000
+      - GROUP_GID=1000
+      - INSTALL_LOCK=true
     env_file: 
       - ./.secrets/gitea.env
+    # command:
+    #   - sh -c "/etc/s6/gitea_usermngt/run"
     networks:
       - docker2docker
     volumes:
       - gitea:/data
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
+      - ./scripts/gitea_usermngt:/etc/s6/gitea_usermngt:rw
     ports:
       # - "3000:3000"
       - "222:22"
+
+  runner:
+    image: gitea/act_runner:nightly
+    restart: always
+    deploy:
+      labels:
+        - traefik.enable=false
+      mode: replicated
+      replicas: 1
+      endpoint_mode: vip
+      update_config:
+        parallelism: 1
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+    environment:
+      CONFIG_FILE: /config.yaml
+      GITEA_INSTANCE_URL: "${INSTANCE_URL}"
+      GITEA_RUNNER_REGISTRATION_TOKEN: "${REGISTRATION_TOKEN}"
+      GITEA_RUNNER_NAME: "${RUNNER_NAME}"
+      GITEA_RUNNER_LABELS: "${RUNNER_LABELS}"
+    networks:
+      - docker2docker
+    volumes:
+      - ./configs/config.yaml:/config.yaml
+      - data:/data
+      - /var/run/docker.sock:/var/run/docker.sock
 
 networks:
   docker2docker:
@@ -41,5 +77,7 @@ networks:
 
 volumes:
   gitea:
+    external: true
+  data:
     external: true
 

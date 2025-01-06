@@ -5,10 +5,6 @@ services:
     image: docker.io/gitea/gitea:1.22.6
     restart: always
     privileged: true
-    cap_add:
-      - SYS_ADMIN
-      - NET_ADMIN
-      - NET_BIND_SERVICE
     deploy:
       labels:
         - traefik.enable=true
@@ -29,20 +25,21 @@ services:
       - USER_UID=1000
       - GROUP_GID=1000
       - INSTALL_LOCK=true
+      - SECRET=/run/secrets/all_in_one
     env_file: 
       - ./.secrets/gitea.env
-    # command:
-    #   - sh -c "/etc/s6/gitea_usermngt/run"
     networks:
       - docker2docker
     volumes:
       - gitea:/data
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
-      - ./scripts/gitea_usermngt:/etc/s6/gitea_usermngt:rw
-    ports:
-      # - "3000:3000"
+      - ./scripts/gitea_usermngt:/etc/s6/gitea_usermngt
+    expose:
+      - "3000:3000"
       - "222:22"
+    secrets:
+      - all_in_one
 
   runner:
     image: gitea/act_runner:nightly
@@ -74,6 +71,10 @@ services:
 networks:
   docker2docker:
       external: true
+
+secrets:
+  all_in_one:
+    external: true
 
 volumes:
   gitea:

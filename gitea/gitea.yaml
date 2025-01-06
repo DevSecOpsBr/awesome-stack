@@ -1,9 +1,10 @@
-version: "3.6"
+version: "3.8"
 
 services:
   server:
     image: docker.io/gitea/gitea:1.22.6
     restart: always
+    privileged: true
     deploy:
       labels:
         - traefik.enable=true
@@ -22,7 +23,9 @@ services:
         condition: on-failure
     environment:
       - USER_UID=1000
-      - USER_GID=1000
+      - GROUP_GID=1000
+      - INSTALL_LOCK=true
+      - SECRET=/run/secrets/all_in_one
     env_file: 
       - ./.secrets/gitea.env
     networks:
@@ -31,15 +34,49 @@ services:
       - gitea:/data
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
-    ports:
-      # - "3000:3000"
+      - ./scripts/gitea_usermngt:/etc/s6/gitea_usermngt
+    expose:
+      - "3000:3000"
       - "222:22"
+    secrets:
+      - all_in_one
+
+  runner:
+    image: gitea/act_runner:nightly
+    restart: always
+    deploy:
+      labels:
+        - traefik.enable=false
+      mode: replicated
+      replicas: 1
+      endpoint_mode: vip
+      update_config:
+        parallelism: 1
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+    environment:
+      GITEA_INSTANCE_URL: "http://gitea_server:3000/"
+      GITEA_RUNNER_REGISTRATION_TOKEN: "${GITEA_RUNNER_REGISTRATION_TOKEN}"
+      GITEA_RUNNER_NAME: "oromis"
+    networks:
+      - docker2docker
+    volumes:
+      # - ./configs/config.yaml:/config.yaml
+      - data:/data
+      - /var/run/docker.sock:/var/run/docker.sock
 
 networks:
   docker2docker:
       external: true
 
+secrets:
+  all_in_one:
+    external: true
+
 volumes:
   gitea:
+    external: true
+  data:
     external: true
 

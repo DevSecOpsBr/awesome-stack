@@ -47,15 +47,20 @@ services:
           condition: on-failure
       labels:
         - traefik.enable=false
+    environment:
+      - MYSQL_USER=root
+      - MYSQL_DATABASE=mysql
+      - MYSQL_ROOT_PASSWORD_FILE=/var/run/secrets/all_in_one
     env_file:
       - ./.envs/mysql.env
-      - ./.secrets/mysql.env
     volumes:
       - mysqld:/var/lib/mysql
     ports:
       - 3306
     networks:
       - docker2docker
+    secrets:
+      - all_in_one
 
   postgres:
     image: docker.io/library/postgres:14
@@ -69,9 +74,12 @@ services:
           condition: on-failure
       labels:
         - traefik.enable=false
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD_FILE=/var/run/secrets/all_in_one
     env_file:
       - ./.envs/postgres.env
-      - ./.secrets/postgres.env
     volumes:
       - postgres:/var/lib/postgresql/data/pgdata
       - ./scripts/create_databases.sh:/docker-entrypoint-initdb.d/create_databases.sh:rw
@@ -79,6 +87,8 @@ services:
       - 5432
     networks:
       - docker2docker
+    secrets:
+      - all_in_one
 
 networks:
   docker2docker:
@@ -88,4 +98,8 @@ volumes:
   postgres:
     external: true
   mysqld:
+    external: true
+
+secrets:
+  all_in_one:
     external: true

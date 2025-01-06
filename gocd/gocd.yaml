@@ -2,20 +2,6 @@ version: '3.9'
 
 services:
 
-  # db:
-  #   image: postgres
-  #   restart: always
-  #   ports:
-  #     - 5433:5432
-  #   environment:
-  #     POSTGRES_PASSWORD: gocd_database_password
-  #     POSTGRES_USER: gocd_database_user
-  #     POSTGRES_DB: gocd
-  #   volumes:
-  #     - pgdata:/var/lib/postgresql/data
-  #   networks:
-  #     - docker2docker
-
   server:
     image: gocd/gocd-server:v21.2.0
     deploy:
@@ -23,8 +9,8 @@ services:
         - "traefik.enable=true"
         - "traefik.docker.network=docker2docker"
         - "traefik.docker.lbswarm=true"
-        - "traefik.http.routers.gocd.entrypoints=web"
-        - traefik.http.routers.gocd.rule=Host(`gocd.local`)
+        - "traefik.http.routers.gocd.entrypoints=web,websecure"
+        - traefik.http.routers.gocd.rule=Host(`gocd.docker.local`)
         - traefik.http.services.gocd.loadbalancer.server.port=8153
       mode: replicated
       replicas: 1
@@ -50,7 +36,7 @@ services:
   agent1:
     image:  gocd/gocd-agent-alpine-3.13:v21.2.0
     environment:
-      GO_SERVER_URL: http://server:8153/go
+      GO_SERVER_URL: http://gocd_server:8153/go
     deploy:
       labels:
         - "traefik.enable=false"

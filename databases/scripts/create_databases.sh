@@ -1,6 +1,10 @@
 #!/bin/bash
 set -e
 
+# This script creates the databases and users automatically
+# using the psql command line tool.
+# Feel free to change it to your needs
+
 psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-EOSQL
 	CREATE USER drone_bb;
 	CREATE DATABASE drone_bitbucket;

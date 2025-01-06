@@ -33,6 +33,8 @@ services:
       - "/etc/ngrok.yml"
     volumes:
       - ./configs/bitbucket.yaml:/etc/ngrok.yml:rw
+    environment:
+      - NGROK_AUTHTOKEN=${NGROK_BITBUCKET_AUTHTOKEN}
     env_file:
       - ./.secrets/bitbucket.env
     networks:
@@ -70,6 +72,8 @@ services:
       - "/etc/ngrok.yml"
     volumes:
       - ./configs/github.yaml:/etc/ngrok.yml:rw
+    environment:
+      - NGROK_AUTHTOKEN=${NGROK_GITHUB_AUTHTOKEN}
     env_file:
       - ./.secrets/github.env
     networks:

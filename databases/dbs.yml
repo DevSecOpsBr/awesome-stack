@@ -47,10 +47,6 @@ services:
           condition: on-failure
       labels:
         - traefik.enable=false
-    environment:
-      - MYSQL_USER=root
-      - MYSQL_DATABASE=mysql
-      - MYSQL_ROOT_PASSWORD_FILE=/var/run/secrets/all_in_one
     env_file:
       - ./.envs/mysql.env
     volumes:
@@ -74,15 +70,11 @@ services:
           condition: on-failure
       labels:
         - traefik.enable=false
-    environment:
-      - POSTGRES_DB=postgres
-      - POSTGRES_USER=root
-      - POSTGRES_PASSWORD_FILE=/var/run/secrets/all_in_one
     env_file:
       - ./.envs/postgres.env
     volumes:
       - postgres:/var/lib/postgresql/data/pgdata
-      - ./scripts/create_databases.sh:/docker-entrypoint-initdb.d/create_databases.sh:rw
+      - ./scripts/create_databases.sh:/docker-entrypoint-initdb.d/create_databases.sh
     ports:
       - 5432
     networks:

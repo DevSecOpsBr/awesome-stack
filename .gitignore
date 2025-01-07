@@ -69,3 +69,7 @@ ngrok/.secrets/*.env
 
 # Databases
 database/.secrets/*.env
+
+# Gitea
+gitea/scripts/gitea_usermngt/supervise
+gitea/scripts/gitea_usermngt/event

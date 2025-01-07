@@ -27,11 +27,16 @@ services:
           cpus: '1.0'
           memory: 500M
     environment:
+      # Drone server settings
       - DRONE_SERVER_HOST=${TRAEFIK_HUB_BB}
-    #   - POSTGRES_PASSWORD=${POSTGRES_ROOT}
+      # Bitbucket credentials
+      - DRONE_BITBUCKET_CLIENT_ID=${DRONE_BITBUCKET_CLIENT_ID}
+      - DRONE_BITBUCKET_CLIENT_SECRET=${DRONE_BITBUCKET_CLIENT_SECRET}
+      # PostgreSQL credentials
+      - DRONE_DATABASE_DRIVER=postgres
+      - DRONE_DATABASE_DATASOURCE=postgres://root:${DOCKER_SECRET_ALL_IN_ONE}@db_postgres:5432/drone_bitbucket?sslmode=disable
     env_file: 
       - ./.env/bitbucket.env
-      - ./.secrets/bitbucket.env
     restart: always
     volumes:
       - drone-server-data:/var/lib/drone/
@@ -49,7 +54,7 @@ services:
         - traefik.http.routers.github.rule=Host(`droneci-gh.docker.local`)
         - traefik.http.services.github.loadbalancer.server.port=80
       mode: replicated
-      replicas: 0
+      replicas: 1
       placement:
         max_replicas_per_node: 1
       endpoint_mode: vip
@@ -65,10 +70,14 @@ services:
           memory: 500M
     environment:
       - DRONE_SERVER_HOST=${TRAEFIK_HUB_GH}
-      # - POSTGRES_PASSWORD=${POSTGRES_ROOT}
+      # GitHub credentials
+      - DRONE_GITHUB_CLIENT_ID=${DRONE_GITHUB_CLIENT_ID}
+      - DRONE_GITHUB_CLIENT_SECRET=${DRONE_GITHUB_CLIENT_SECRET}
+      # PostgreSQL credentials
+      - DRONE_DATABASE_DRIVER=postgres
+      - DRONE_DATABASE_DATASOURCE=postgres://root:${DOCKER_SECRET_ALL_IN_ONE}@db_postgres:5432/drone_github?sslmode=disable
     env_file: 
       - ./.env/github.env
-      - ./.secrets/github.env
     restart: always
     volumes:
       - drone-server-data:/var/lib/drone/
@@ -101,7 +110,6 @@ services:
           memory: 500M
     env_file:
       - ./.env/runner.env
-      - ./.secrets/runner.env
     restart: always
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock

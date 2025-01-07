@@ -3,14 +3,14 @@ version: "3.9"
 services:
 
   server:
-    image: harness/gitness
+    image: harness/harness
     deploy:
       labels:
         - traefik.enable=true
         - traefik.docker.lbswarm=true
         - traefik.docker.network=docker2docker
         - traefik.http.routers.gitness.entrypoints=web,websecure
-        - traefik.http.routers.gitness.rule=Host(`gitness.docker.local`)
+        - traefik.http.routers.gitness.rule=Host(`harness.docker.local`)
         - traefik.http.services.gitness.loadbalancer.server.port=3000
       mode: replicated
       replicas: 1
@@ -30,9 +30,15 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - gitness-data:/data
+    environment:
+      - GITNESS_URL_BASE=http://harness.docker.local
+      # Gitness admin credentials
+      - GITNESS_PRINCIPAL_ADMIN_PASSWORD=admin12345
+      # Postgres credentials settings
+      - GITNESS_DATABASE_DRIVER=postgres
+      - GITNESS_DATABASE_DATASOURCE=postgres://root:${DOCKER_SECRET_ALL_IN_ONE}@db_postgres:5432/gitness?sslmode=disable
     env_file:
       - ./envs/settings.env
-      - ./secrets/postgres.env
     networks:
       - docker2docker
 

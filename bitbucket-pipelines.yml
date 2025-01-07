@@ -20,5 +20,5 @@ pipelines:
             lfs: false
             depth: 5
           script:
-            - git push --mirror --porcelain --thin -f git@github.com:DevSecOpsBr/docker.git
-            - git push --mirror --porcelain --thin -f git@gitlab.com:devsecopsbr1/docker.git
+            - git push --all --porcelain --thin --progress --force git@github.com:DevSecOpsBr/docker.git
+            - git push --all --porcelain --thin --progress --force git@gitlab.com:devsecopsbr1/docker.git

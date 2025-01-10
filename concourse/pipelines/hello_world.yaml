@@ -1,0 +1,5 @@
+jobs:
+- name: deploy_minikube_cluster
+  plan:
+  - task: cluster_name
+    config:

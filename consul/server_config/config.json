@@ -1,0 +1,28 @@
+{
+    "advertise_addr" : "{{ GetInterfaceIP \"eth0\" }}",
+    "bind_addr": "{{ GetInterfaceIP \"eth0\" }}",
+    "client_addr": "0.0.0.0",
+    "data_dir": "/consul/data",
+    "datacenter": "DC1",
+    "leave_on_terminate" : true,
+    "skip_leave_on_interrupt" : true,
+
+    "retry_join": ["consul_clients", "clients"],
+    "server" : true,
+    "ui" : true,
+
+    "autopilot": {
+      "cleanup_dead_servers": true
+    },
+
+    "disable_update_check": true,
+    "log_level": "debug",
+
+    "encrypt": "8I0FY7QnaAeESSgEOfr3xQ==",
+
+    "acl_datacenter": "dc1",
+    "acl_default_policy": "deny",
+    "acl_master_token": "01f47f9e-f989-966b-9acc-f88fde2e7f9f",
+    "acl_down_policy": "extend-cache"
+
+}

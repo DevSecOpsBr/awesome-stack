@@ -1,0 +1,25 @@
+connect_timeout: 30s
+console_ui: true
+dns_resolver_ips:
+  - 1.1.1.1
+  - 8.8.8.8
+heartbeat_interval: 1m
+heartbeat_tolerance: 5s
+log_level: info
+log_format: logfmt
+region: auto
+remote_management: true
+# root_cas: trusted
+update_channel: stable
+update_check: true
+version: 2
+web_addr: localhost:4040
+tunnels:
+  bitbucket:
+    proto: http
+    addr: droneci_server_bitbucket
+    host_header: rewrite
+    hostname: moving-whale-humbly.ngrok-free.app
+    inspect: true
+    schemes:
+      - https

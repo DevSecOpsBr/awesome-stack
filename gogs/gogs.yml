@@ -1,0 +1,62 @@
+version: '3.5'
+
+services:
+
+# Gogs SCM
+  gogs:
+    image: gogs/gogs
+    domainname: ellesmera.org
+
+# metadata to registrator
+    environment:
+        - SERVICE_NAME=gogs
+        - SERVICE_TAGS=scm,git,web
+
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+
+    # Deployment information
+    deploy:
+        replicas: 1
+        update_config:
+            parallelism: 2
+            delay: 10s
+        restart_policy:
+            condition: on-failure
+        endpoint_mode: vip
+        labels:
+            com.example.description: "Gogs SCM"
+
+    # Resource limits
+        resources:
+            limits:
+                cpus: '1.0'
+                memory: 1.0G
+            reservations:
+                cpus: '0.50'
+                memory: 500M
+
+    #  Volumes to bind inside container
+    volumes:
+      - ./data/:/data
+
+    # Passing config.yaml file as args to docker
+    # command: ["/config.yaml"]
+
+    # mapping ports
+    ports:
+      - 10022:22
+      - 10080:3000
+
+    # networking information
+    networks:
+      - docker2docker
+
+# external networks
+networks:
+    docker2docker:
+        external: true
+    host:
+        external: true

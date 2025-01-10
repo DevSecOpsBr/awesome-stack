@@ -1,0 +1,24 @@
+image:
+  name: atlassian/default-image:3
+
+clone:
+  depth: 1
+options:
+  max-time: 60
+  docker: true
+  size: 2x
+
+pipelines:
+  # Mirroring repository to Github & Gitlab
+  pull-requests:
+    '**':
+
+      - step:
+          name: "Mirroring repository to Github & Gitlab"
+          clone:
+            enabled: true
+            lfs: false
+            depth: 5
+          script:
+            - git push --all --porcelain --thin --progress --force git@github.com:DevSecOpsBr/docker.git
+            - git push --all --porcelain --thin --progress --force git@gitlab.com:devsecopsbr1/docker.git

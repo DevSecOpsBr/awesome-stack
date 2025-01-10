@@ -1,0 +1,53 @@
+version: '3.6'
+
+services:
+
+  mongo:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: yourpassword
+      SERVICE_NAME: mongo
+      SERVICE_TAG: db, mongodb
+    labels:
+      - "traefik.enable=false"
+    deploy:
+      replicas: 1
+      endpoint_mode: dnsrr
+    networks:
+      - docker2docker
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
+
+    volumes:
+      - ./course:/opt/:rw
+
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: yourpassword
+    labels:
+      - "traefik.enable=false"
+    deploy:
+      replicas: 1
+      endpoint_mode: vip
+    networks:
+      - docker2docker
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
+
+
+networks:
+  docker2docker:
+    external: true

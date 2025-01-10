@@ -1,0 +1,68 @@
+version: '3.5'
+
+services:
+
+  jenkins:
+
+    image: jenkins:latest
+    restart: always
+
+    environment:
+        # metadata to registrator
+        SERVICE_NAME: jenkins
+        SERVICE_TAGS: ci,cd,deploy
+
+    # Volumes to be mounted
+    volumes:
+        - type: bind
+          source: /Users/rodrigo.carvalho/jenkins
+          target: /var/jenkins_home
+
+    # Application part (deployment, rolling upadte, resource limits)
+    deploy:
+        replicas: 1
+        mode: replicated
+        placement:
+            constraints:
+                - node.role == manager
+        update_config:
+            parallelism: 2
+            delay: 10s
+            failure_action: rollback
+            order: stop-first
+        restart_policy:
+            condition: on-failure
+            delay: 5s
+            window: 10s
+        endpoint_mode: vip
+        labels:
+            de.ellesmera.description: "Jenkins Continous Integration and Delivery"
+
+        resources:
+            limits:
+                cpus: '0.5'
+                memory: 2G
+            reservations:
+                cpus: '0.05'
+                memory: 1G
+
+    # Docker log control to try avoid disk space issue
+    logging:
+        driver: "json-file"
+        options:
+            max-size: "500M"
+            max-file: "50"
+
+    # Ports to be used by the container
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+
+    # Networks
+    networks:
+        - docker2docker
+
+networks:
+
+  docker2docker:
+      external: true

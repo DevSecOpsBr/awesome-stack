@@ -1,0 +1,56 @@
+version: "3.9"
+
+services:
+
+  traefik:
+    image: traefik:v2.11
+    environment:
+      HOSTNAME: traefik
+      SERVICE_NAME: traefik
+      SERVICE_TAGS: lb, proxy
+    command:
+      - --api=true
+      - --ping=true
+      - --accesslog=true
+      - --api.debug=true
+      - --api.insecure=true
+      - --api.dashboard=true
+      - --providers.docker=true
+      - --providers.docker.watch=true
+      - --providers.docker.swarmmode=true
+      - --providers.docker.network=docker2docker
+      - --providers.docker.allowEmptyServices=true
+      - --providers.docker.exposedByDefault=true
+      - --metrics.prometheus=true
+      - --entryPoints.web.address=:80
+      - --entryPoints.websecure.address=:443
+    deploy:
+      replicas: 1
+      labels:
+        - "SERVICE_IGNORE=true"
+        - "traefik.enable=true"
+      mode: replicated
+      endpoint_mode: vip
+      update_config:
+        parallelism: 1
+        failure_action: rollback
+        delay: 30s
+      restart_policy:
+        condition: any
+        delay: 5s
+        window: 120s
+      placement:
+        constraints:
+          - node.role == manager
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - docker2docker
+
+networks:
+  docker2docker:
+    external: true

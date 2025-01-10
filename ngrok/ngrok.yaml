@@ -1,0 +1,78 @@
+version: "3.9"
+
+services:
+  bitbucket:
+    image: ngrok/ngrok:latest
+    restart: unless-stopped
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.docker.lbswarm=true
+        - traefik.docker.network=docker2docker
+        - traefik.http.routers.bitbucket.entrypoints=web,websecure
+        - traefik.http.routers.bitbucket.rule=Host(`ngrok-bb.docker.local`)
+        - traefik.http.services.bitbucket.loadbalancer.server.port=4040
+      mode: replicated
+      replicas: 1
+      placement:
+        max_replicas_per_node: 1
+      update_config:
+        parallelism: 1
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+      resources:
+        limits:
+            cpus: '1.0'
+            memory: 500M
+    command:
+      - "start"
+      - "--all"
+      - "--config"
+      - "/etc/ngrok.yml"
+    volumes:
+      - ./configs/bitbucket.yaml:/etc/ngrok.yml:rw
+    environment:
+      - NGROK_AUTHTOKEN=${NGROK_BITBUCKET_AUTHTOKEN}
+    networks:
+      - docker2docker
+
+  github:
+    image: ngrok/ngrok:latest
+    restart: unless-stopped
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.docker.lbswarm=true
+        - traefik.docker.network=docker2docker
+        - traefik.http.routers.github.entrypoints=web,websecure
+        - traefik.http.routers.github.rule=Host(`ngrok-gh.docker.local`)
+        - traefik.http.services.github.loadbalancer.server.port=4040
+      mode: replicated
+      replicas: 1
+      placement:
+        max_replicas_per_node: 1
+      update_config:
+        parallelism: 1
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 500M
+    command:
+      - "start"
+      - "--all"
+      - "--config"
+      - "/etc/ngrok.yml"
+    volumes:
+      - ./configs/github.yaml:/etc/ngrok.yml:rw
+    environment:
+      - NGROK_AUTHTOKEN=${NGROK_GITHUB_AUTHTOKEN}
+    networks:
+      - docker2docker
+
+networks:
+  docker2docker:
+    external: true

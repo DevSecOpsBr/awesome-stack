@@ -35,7 +35,11 @@ services:
       # PostgreSQL credentials
       - DRONE_DATABASE_DRIVER=postgres
       - DRONE_DATABASE_DATASOURCE=postgres://root:${DOCKER_SECRET_ALL_IN_ONE}@db_postgres:5432/drone_bitbucket?sslmode=disable
+<<<<<<< HEAD
     env_file: 
+=======
+    env_file:
+>>>>>>> CU-initial
       - ./.env/bitbucket.env
     restart: always
     volumes:
@@ -76,7 +80,11 @@ services:
       # PostgreSQL credentials
       - DRONE_DATABASE_DRIVER=postgres
       - DRONE_DATABASE_DATASOURCE=postgres://root:${DOCKER_SECRET_ALL_IN_ONE}@db_postgres:5432/drone_github?sslmode=disable
+<<<<<<< HEAD
     env_file: 
+=======
+    env_file:
+>>>>>>> CU-initial
       - ./.env/github.env
     restart: always
     volumes:
@@ -113,7 +121,11 @@ services:
     restart: always
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+<<<<<<< HEAD
     networks: 
+=======
+    networks:
+>>>>>>> CU-initial
       - docker2docker
 
 volumes:
@@ -122,6 +134,10 @@ volumes:
   db:
     external: true
 
+<<<<<<< HEAD
 networks: 
+=======
+networks:
+>>>>>>> CU-initial
   docker2docker:
     external: true

@@ -26,4 +26,8 @@ scrape_configs:
         regex: .*,prod,.*
         action: keep
       - source_labels: [__meta_consul_service]
+<<<<<<< HEAD
         target_label: job
+=======
+        target_label: job
+>>>>>>> CU-initial

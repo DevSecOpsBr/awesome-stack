@@ -11,7 +11,11 @@
     "bootstrap": true,
     "server" : true,
     "ui" : true,
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> CU-initial
     "autopilot": {
       "cleanup_dead_servers": true
     },
@@ -24,5 +28,9 @@
     "acl_default_policy": "deny",
     "acl_master_token": "01f47f9e-f989-966b-9acc-f88fde2e7f9f",
     "acl_down_policy": "extend-cache"
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> CU-initial
 }

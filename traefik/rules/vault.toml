@@ -1,15 +1,27 @@
+<<<<<<< HEAD
 [backends]  
+=======
+[backends]
+>>>>>>> CU-initial
   [backends.vault]
     [backends.vault.circuitbreaker]
     expression = "NetworkErrorRatio() > 0.3"
     [backends.vault.maxconn]
        amount = 10
+<<<<<<< HEAD
        extractorfunc = "request.host"    
+=======
+       extractorfunc = "request.host"
+>>>>>>> CU-initial
     [backends.vault.loadbalancer.stickiness]
         cookiename = "vault_cookie"
     [backends.vault.healthcheck]
     path = "/health"
+<<<<<<< HEAD
     interval = "10s"    
+=======
+    interval = "10s"
+>>>>>>> CU-initial
     [backends.vault.LoadBalancer]
     method = "drr"
     [backends.vault.servers.new]
@@ -20,11 +32,19 @@
 
 [frontends]
   [frontends.vault]
+<<<<<<< HEAD
   entrypoints = ["http"]  
+=======
+  entrypoints = ["http"]
+>>>>>>> CU-initial
   backend = "vaultsrv"
   FrameDeny = true
   passHostHeader = true
   passTLSCert = true
   priority = 20
     [frontends.vault.routes.server_1]
+<<<<<<< HEAD
       rule = "Host:vault.ellesmera.com"
+=======
+      rule = "Host:vault.ellesmera.com"
+>>>>>>> CU-initial

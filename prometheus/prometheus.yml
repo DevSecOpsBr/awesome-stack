@@ -3,7 +3,11 @@ version: '3.6'
 services:
 
   prometheus:
+<<<<<<< HEAD
   
+=======
+
+>>>>>>> CU-initial
     image: prom/prometheus
     restart: always
 
@@ -12,13 +16,21 @@ services:
         SERVICE_NAME: prometheus
         SERVICE_TAGS: monitoring,alerting
 
+<<<<<<< HEAD
     # Volumes to be mounted 
+=======
+    # Volumes to be mounted
+>>>>>>> CU-initial
     volumes:
         - type: bind
           source: ./config/prometheus.yml
           target: /etc/prometheus/prometheus.yml
         - /var/run/docker.sock:/var/run/docker.sock
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> CU-initial
     # Application part (deployment, rolling upadte, resource limits)
     deploy:
         replicas: 1
@@ -55,12 +67,20 @@ services:
             max-size: "200M"
             max-file: "50"
 
+<<<<<<< HEAD
     # Ports to be used by the container 
+=======
+    # Ports to be used by the container
+>>>>>>> CU-initial
     ports:
         - target: 9090
           published: 9090
           protocol: tcp
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> CU-initial
     # Networks
     networks:
         - docker2docker
@@ -72,7 +92,11 @@ services:
     restart: always
     volumes:
         - grafana:/var/lib/grafana
+<<<<<<< HEAD
         
+=======
+
+>>>>>>> CU-initial
     # metadata to registrator
     environment:
         SERVICE_NAME: grafana

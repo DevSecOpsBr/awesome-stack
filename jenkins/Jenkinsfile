@@ -10,7 +10,11 @@ pipeline {
             agent {
                 docker {
                     image 'python:latest'
+<<<<<<< HEAD
                     image 'java' 
+=======
+                    image 'java'
+>>>>>>> CU-initial
                 }
             }
             steps {
@@ -25,9 +29,15 @@ pipeline {
             }
             post {
                 always {
+<<<<<<< HEAD
                     junit 'test-reports/results.xml' 
                 }
             }        
+=======
+                    junit 'test-reports/results.xml'
+                }
+            }
+>>>>>>> CU-initial
         }
 
         stage("Building") {
@@ -42,14 +52,25 @@ pipeline {
         stage('Deploy to Acceptance') {
             when {
                 expression {
+<<<<<<< HEAD
                     currentBuild.result == null || currentBuild.result == 'SUCCESS' 
+=======
+                    currentBuild.result == null || currentBuild.result == 'SUCCESS'
+>>>>>>> CU-initial
                 }
             }
                 steps {
                     sh 'docker stack deploy -c stack.yml app'
                 }
         }
+<<<<<<< HEAD
         
     }
 
 }
+=======
+
+    }
+
+}
+>>>>>>> CU-initial

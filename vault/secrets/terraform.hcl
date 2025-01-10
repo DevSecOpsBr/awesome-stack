@@ -31,4 +31,8 @@ path "sys/policies/acl/*" {
 # List, create, update, and delete key/value secrets
 path "secret/*" {
   capabilities = ["create", "read", "update", "delete", "list"]
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> CU-initial

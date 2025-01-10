@@ -6,6 +6,7 @@ Nginx is a super lightwieght web server able to handle thousands of connections 
 
 ### Prerequisites
 
+<<<<<<< HEAD
 ```
 Last version of docker in a swarm mode to use that stack as well a consul service discovery and a loadbalancer.
 You can find boths here.
@@ -13,10 +14,20 @@ You can find boths here.
 
 ### Running
 ```
+=======
+* docker ce
+* docker cli
+* docker swarm cluster (alread setup)
+
+### Running
+
+```sh
+>>>>>>> CU-initial
 docker stack deploy -c nginx.yml www
 ```
 
 ### Checking
+<<<<<<< HEAD
 ```
 docker service ls
 ```
@@ -31,3 +42,11 @@ Rodrigo Carvalho
 DevOps Engineering
 
 Skype: rdgacarvalho
+=======
+
+```sh
+docker service ls
+or
+docker stack ls
+```
+>>>>>>> CU-initial

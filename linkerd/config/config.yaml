@@ -43,6 +43,12 @@ telemetry:
 - kind: io.l5d.prometheus
   path: /admin/metrics/prometheus
   prefix: linkerd_prod
+<<<<<<< HEAD
   
 usage:
   orgId: ellesmera.com
+=======
+
+usage:
+  orgId: ellesmera.com
+>>>>>>> CU-initial

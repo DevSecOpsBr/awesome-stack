@@ -16,7 +16,11 @@ defaultEntryPoints = ["http"]
    [entryPoints.http]
    address = ":80"
    compress = true
+<<<<<<< HEAD
   
+=======
+
+>>>>>>> CU-initial
 ################################################################
 # Traefik logs configuration
 ################################################################
@@ -83,7 +87,11 @@ defaultEntryPoints = ["http"]
 [consulCatalog]
 
   watch = true
+<<<<<<< HEAD
   
+=======
+
+>>>>>>> CU-initial
   endpoint = "consul_servers:8500"
 
   exposedByDefault = true
@@ -98,7 +106,11 @@ defaultEntryPoints = ["http"]
 [metrics]
 
   watch = true
+<<<<<<< HEAD
   
+=======
+
+>>>>>>> CU-initial
   # To enable Traefik to export internal metrics to Prometheus
   [metrics.prometheus]
   buckets=[0.1,0.3,1.2,5.0]
@@ -106,5 +118,10 @@ defaultEntryPoints = ["http"]
 # [file]
 # watch = false
 # directory = "/rules"
+<<<<<<< HEAD
   
 [retry]
+=======
+
+[retry]
+>>>>>>> CU-initial

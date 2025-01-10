@@ -4,7 +4,10 @@ services:
   bitbucket:
     image: ngrok/ngrok:latest
     restart: unless-stopped
+<<<<<<< HEAD
     # network_mode: host
+=======
+>>>>>>> CU-initial
     deploy:
       labels:
         - traefik.enable=true
@@ -35,15 +38,21 @@ services:
       - ./configs/bitbucket.yaml:/etc/ngrok.yml:rw
     environment:
       - NGROK_AUTHTOKEN=${NGROK_BITBUCKET_AUTHTOKEN}
+<<<<<<< HEAD
     env_file:
       - ./.secrets/bitbucket.env
+=======
+>>>>>>> CU-initial
     networks:
       - docker2docker
 
   github:
     image: ngrok/ngrok:latest
     restart: unless-stopped
+<<<<<<< HEAD
     # network_mode: host
+=======
+>>>>>>> CU-initial
     deploy:
       labels:
         - traefik.enable=true
@@ -74,11 +83,18 @@ services:
       - ./configs/github.yaml:/etc/ngrok.yml:rw
     environment:
       - NGROK_AUTHTOKEN=${NGROK_GITHUB_AUTHTOKEN}
+<<<<<<< HEAD
     env_file:
       - ./.secrets/github.env
     networks:
       - docker2docker
 
 networks: 
+=======
+    networks:
+      - docker2docker
+
+networks:
+>>>>>>> CU-initial
   docker2docker:
     external: true

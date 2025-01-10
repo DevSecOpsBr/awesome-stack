@@ -89,7 +89,11 @@ function java_mailing_acl () {
     '{"Name": "'${JAVA_MAILING_ACL}'","Type": "client","Rules": "key \"\" { policy = \"read\" } key \"service/\" { policy = \"read\" } key \"service/batch_mailing/\" { policy = \"write\" } operator = \"read\"" }' http://$SERVER/v1/acl/create?token=$MASTER_TOKEN
     echo -e "\n"
 
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> CU-initial
 }
 
 function vault_acl() {
@@ -103,7 +107,11 @@ function vault_acl() {
     echo -e "${VAULT_ACL}: "
     curl -s -X PUT -d \
     '{"Name": "'${VAULT_ACL}'","Type": "client","Rules": "key \"\" { policy = \"read\" } key \"service/\" { policy = \"read\" } key \"service/batch_mailing/\" { policy = \"write\" } operator = \"read\"" }' http://$SERVER/v1/acl/create?token=$MASTER_TOKEN
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> CU-initial
     echo -e "\n"
 
     # java_mailing_acl

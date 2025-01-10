@@ -3,7 +3,11 @@ version: '3.5'
 services:
 
   openstack:
+<<<<<<< HEAD
   
+=======
+
+>>>>>>> CU-initial
     image: chrisrock/openstack-cli
     restart: always
 
@@ -32,7 +36,11 @@ services:
             reservations:
                 cpus: '0.25'
                 memory: 800M
+<<<<<<< HEAD
                 
+=======
+
+>>>>>>> CU-initial
     networks:
         - docker2docker
 

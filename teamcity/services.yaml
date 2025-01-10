@@ -69,7 +69,11 @@ services:
 
   agent:
     image: jetbrains/teamcity-agent
+<<<<<<< HEAD
     environment: 
+=======
+    environment:
+>>>>>>> CU-initial
         SERVER_URL: http://teamcity_server:8222
         DOCKER_IN_DOCKER: start
     privileged: true

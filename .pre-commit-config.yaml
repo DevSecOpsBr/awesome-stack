@@ -1,5 +1,22 @@
 default_stages: [commit, push]
+<<<<<<< HEAD
 repos:
+=======
+
+repos:
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.3.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-added-large-files
+      - id: check-merge-conflict
+      - id: detect-private-key
+      - id: detect-aws-credentials
+
+>>>>>>> CU-initial
   - repo: https://github.com/tenable/terrascan
     rev: v1.15.2
     hooks:

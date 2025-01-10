@@ -37,7 +37,11 @@ metricbeat.modules:
 
   # Configure the metric types that are included by these metricsets.
   cpu.metrics:  ["percentages"]  # The other available options are normalized_percentages and ticks.
+<<<<<<< HEAD
   core.metrics: ["percentages"]  # The other available option is ticks.  
+=======
+  core.metrics: ["percentages"]  # The other available option is ticks.
+>>>>>>> CU-initial
 
   enabled: true
   period: 10s
@@ -78,7 +82,11 @@ metricbeat.modules:
   namespace: example
   tags: ["prometheus"]
 
+<<<<<<< HEAD
 #### Output 
+=======
+#### Output
+>>>>>>> CU-initial
 output.elasticsearch:
   hosts: ["elasticsearch:9200", "elasticseach2:9200"]
   # index: "metricbeat"

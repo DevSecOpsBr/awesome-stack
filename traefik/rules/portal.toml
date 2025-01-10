@@ -5,12 +5,20 @@
     expression = "NetworkErrorRatio() > 0.8"
     [backends.portal2.maxconn]
        amount = 10
+<<<<<<< HEAD
        extractorfunc = "request.host"    
+=======
+       extractorfunc = "request.host"
+>>>>>>> CU-initial
     [backends.portal2.loadbalancer.stickiness]
         cookiename = "portal2_cookie"
     [backends.portal2.healthcheck]
     path = "/health"
+<<<<<<< HEAD
     interval = "15s"    
+=======
+    interval = "15s"
+>>>>>>> CU-initial
     [backends.portal2.LoadBalancer]
     method = "drr"
     [backends.portal2.servers.new]
@@ -20,7 +28,11 @@
     url = "http://portal1"
     weight = 5
 
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> CU-initial
 [frontends]
 
   [frontends.portal2]
@@ -52,4 +64,8 @@
         [frontends.portal2.ratelimit.rateset.rateset2]
             period = "3s"
             average = 5
+<<<<<<< HEAD
             burst = 10
+=======
+            burst = 10
+>>>>>>> CU-initial

@@ -69,7 +69,11 @@ services:
       options:
         max-size: "200k"
         max-file: "10"
+<<<<<<< HEAD
     volumes: 
+=======
+    volumes:
+>>>>>>> CU-initial
       - ./keys/web:/concourse-keys
     networks:
       - docker2docker
@@ -99,7 +103,11 @@ services:
       options:
         max-file: "5"
         max-size: "10m"
+<<<<<<< HEAD
     volumes: 
+=======
+    volumes:
+>>>>>>> CU-initial
       - ./keys/worker:/concourse-keys
     networks:
       - docker2docker

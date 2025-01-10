@@ -3,7 +3,11 @@ version: '3.5'
 services:
 
   jenkins:
+<<<<<<< HEAD
   
+=======
+
+>>>>>>> CU-initial
     image: jenkins:latest
     restart: always
 
@@ -12,12 +16,20 @@ services:
         SERVICE_NAME: jenkins
         SERVICE_TAGS: ci,cd,deploy
 
+<<<<<<< HEAD
     # Volumes to be mounted 
+=======
+    # Volumes to be mounted
+>>>>>>> CU-initial
     volumes:
         - type: bind
           source: /Users/rodrigo.carvalho/jenkins
           target: /var/jenkins_home
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> CU-initial
     # Application part (deployment, rolling upadte, resource limits)
     deploy:
         replicas: 1
@@ -53,7 +65,11 @@ services:
             max-size: "500M"
             max-file: "50"
 
+<<<<<<< HEAD
     # Ports to be used by the container 
+=======
+    # Ports to be used by the container
+>>>>>>> CU-initial
     ports:
       - "8080:8080"
       - "50000:50000"
@@ -61,7 +77,11 @@ services:
     # Networks
     networks:
         - docker2docker
+<<<<<<< HEAD
   
+=======
+
+>>>>>>> CU-initial
 networks:
 
   docker2docker:

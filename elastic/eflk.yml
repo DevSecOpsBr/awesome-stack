@@ -6,7 +6,11 @@ services:
     image: docker.elastic.co/elasticsearch/elasticsearch:6.4.0
     environment:
       - SERVICE_NAME="elasticsearch"
+<<<<<<< HEAD
       - SERVICE_TAGS="elastic,node1"    
+=======
+      - SERVICE_TAGS="elastic,node1"
+>>>>>>> CU-initial
       - cluster.name=docker-cluster
       - bootstrap.memory_lock=false
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
@@ -61,7 +65,11 @@ services:
     environment:
       SERVER_NAME: kibana
       ELASTICSEARCH_URL: http://elasticsearch:9200
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> CU-initial
     # metadata to registrator
       SERVICE_NAME: kibana
       SERVICE_TAGS: dashboard, index, apm

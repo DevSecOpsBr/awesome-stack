@@ -17,12 +17,22 @@
 
     "disable_update_check": true,
     "log_level": "debug",
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> CU-initial
     "encrypt": "8I0FY7QnaAeESSgEOfr3xQ==",
 
     "acl_datacenter": "dc1",
     "acl_default_policy": "deny",
+<<<<<<< HEAD
     "acl_master_token": "01f47f9e-f989-966b-9acc-f88fde2e7f9f",    
     "acl_down_policy": "extend-cache"
     
+=======
+    "acl_master_token": "01f47f9e-f989-966b-9acc-f88fde2e7f9f",
+    "acl_down_policy": "extend-cache"
+
+>>>>>>> CU-initial
 }

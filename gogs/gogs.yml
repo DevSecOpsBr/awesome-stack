@@ -16,7 +16,11 @@ services:
       memlock:
         soft: -1
         hard: -1
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> CU-initial
     # Deployment information
     deploy:
         replicas: 1
@@ -28,8 +32,13 @@ services:
         endpoint_mode: vip
         labels:
             com.example.description: "Gogs SCM"
+<<<<<<< HEAD
         
     # Resource limits 
+=======
+
+    # Resource limits
+>>>>>>> CU-initial
         resources:
             limits:
                 cpus: '1.0'
@@ -37,6 +46,7 @@ services:
             reservations:
                 cpus: '0.50'
                 memory: 500M
+<<<<<<< HEAD
     
     #  Volumes to bind inside container
     volumes:
@@ -45,6 +55,16 @@ services:
     # Passing config.yaml file as args to docker
     # command: ["/config.yaml"]
     
+=======
+
+    #  Volumes to bind inside container
+    volumes:
+      - ./data/:/data
+
+    # Passing config.yaml file as args to docker
+    # command: ["/config.yaml"]
+
+>>>>>>> CU-initial
     # mapping ports
     ports:
       - 10022:22

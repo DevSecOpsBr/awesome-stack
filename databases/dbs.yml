@@ -56,7 +56,11 @@ services:
     networks:
       - docker2docker
     secrets:
+<<<<<<< HEAD
       - all_in_one
+=======
+      - database_password
+>>>>>>> CU-initial
 
   postgres:
     image: docker.io/library/postgres:14
@@ -80,7 +84,11 @@ services:
     networks:
       - docker2docker
     secrets:
+<<<<<<< HEAD
       - all_in_one
+=======
+      - database_password
+>>>>>>> CU-initial
 
 networks:
   docker2docker:
@@ -93,5 +101,9 @@ volumes:
     external: true
 
 secrets:
+<<<<<<< HEAD
   all_in_one:
+=======
+  database_password:
+>>>>>>> CU-initial
     external: true

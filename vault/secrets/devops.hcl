@@ -46,4 +46,8 @@ path "sys/mounts" {
 # Read health checks
 path "sys/health" {
   capabilities = ["read", "sudo"]
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> CU-initial

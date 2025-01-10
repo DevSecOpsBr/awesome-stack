@@ -6,16 +6,27 @@ Jenkins is an open source automation server written in Java. Jenkins helps to au
 
 ### Prerequisites
 
+<<<<<<< HEAD
 ```
 Last version of docker in a swarm mode to using that stack.
 ```
 
 ### Running
 ```
+=======
+* docker ce
+* docker cli
+* docker swarm cluster (alread setup)
+
+### Running
+
+```(sh)
+>>>>>>> CU-initial
 docker stack deploy -c jenkins.yml ci
 ```
 
 ### Checking
+<<<<<<< HEAD
 ```
 docker service ls
 ```
@@ -30,3 +41,11 @@ Rodrigo Carvalho
 DevOps Engineering
 
 Skype: rdgacarvalho
+=======
+
+```(sh)
+docker service ls
+or
+docker stack ls
+```
+>>>>>>> CU-initial

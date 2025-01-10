@@ -1,6 +1,11 @@
 pipeline {
+<<<<<<< HEAD
     agent { 
         node { label 'swarm-ci' } 
+=======
+    agent {
+        node { label 'swarm-ci' }
+>>>>>>> CU-initial
     }
 
     environment {
@@ -155,4 +160,8 @@ pipeline {
           bitbucketStatusNotify buildState: "FAILED"
       }
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> CU-initial

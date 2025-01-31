@@ -1,0 +1,42 @@
+version: '3.5'
+
+services:
+
+  openstack:
+
+    image: chrisrock/openstack-cli
+    restart: always
+
+    environment:
+    # metadata to registrator
+        SERVICE_NAME: openstack
+        SERVICE_TAGS: iaas,cm
+
+    volumes:
+      - ./config/:/config
+
+    deploy:
+        replicas: 1
+        update_config:
+            parallelism: 2
+            delay: 10s
+        restart_policy:
+            condition: on-failure
+        endpoint_mode: vip
+        labels:
+            com.example.description: "Openstack"
+        resources:
+            limits:
+                cpus: '0.50'
+                memory: 1G
+            reservations:
+                cpus: '0.25'
+                memory: 800M
+
+    networks:
+        - docker2docker
+
+networks:
+
+    docker2docker:
+        external: true

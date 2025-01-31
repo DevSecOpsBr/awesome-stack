@@ -1,0 +1,120 @@
+version: '3.6'
+
+services:
+
+  prometheus:
+
+    image: prom/prometheus
+    restart: always
+
+    # metadata to registrator
+    environment:
+        SERVICE_NAME: prometheus
+        SERVICE_TAGS: monitoring,alerting
+
+    # Volumes to be mounted
+    volumes:
+        - type: bind
+          source: ./config/prometheus.yml
+          target: /etc/prometheus/prometheus.yml
+        - /var/run/docker.sock:/var/run/docker.sock
+
+    # Application part (deployment, rolling upadte, resource limits)
+    deploy:
+        replicas: 1
+        mode: replicated
+        placement:
+            constraints:
+                - node.role == manager
+        update_config:
+            parallelism: 2
+            delay: 10s
+            failure_action: rollback
+            order: stop-first
+        restart_policy:
+            condition: on-failure
+            delay: 5s
+            window: 10s
+        endpoint_mode: vip
+        labels:
+            de.ellesmera.description: "Prometheus Monitoring Tool"
+
+        # Compute limitation
+        resources:
+            limits:
+                cpus: '1.0'
+                memory: 2G
+            reservations:
+                cpus: '1.0'
+                memory: 1G
+
+    # Docker log control to try avoid disk space issue
+    logging:
+        driver: "json-file"
+        options:
+            max-size: "200M"
+            max-file: "50"
+
+    # Ports to be used by the container
+    ports:
+        - target: 9090
+          published: 9090
+          protocol: tcp
+
+    # Networks
+    networks:
+        - docker2docker
+
+
+  grafana:
+
+    image: grafana/grafana
+    restart: always
+    volumes:
+        - grafana:/var/lib/grafana
+
+    # metadata to registrator
+    environment:
+        SERVICE_NAME: grafana
+        SERVICE_TAGS: dashboard
+
+    deploy:
+        replicas: 1
+        mode: replicated
+        placement:
+            constraints:
+                - node.role == manager
+        update_config:
+            parallelism: 2
+            delay: 10s
+        restart_policy:
+            condition: on-failure
+        endpoint_mode: vip
+        labels:
+            de.ellesmera.description: "Grafana Dashboard Monitoring"
+
+        resources:
+            limits:
+                cpus: '0.50'
+                memory: 1G
+            reservations:
+                cpus: '0.25'
+                memory: 800M
+    logging:
+        driver: "json-file"
+        options:
+            max-size: "200M"
+            max-file: "10"
+
+    ports:
+        - '3000:3000'
+    networks:
+        - docker2docker
+
+volumes:
+    grafana:
+        external: true
+
+networks:
+    docker2docker:
+        external: true

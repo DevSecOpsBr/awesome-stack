@@ -71,7 +71,7 @@ defaultEntryPoints = ["http"]
 
   endpoint = "unix:///var/run/docker.sock"
 
-  domain = "ellesmera.com"
+  domain = "docker.local"
 
   exposedbydefault = false
 
@@ -88,7 +88,7 @@ defaultEntryPoints = ["http"]
 
   exposedByDefault = true
 
-  domain = "ellesmera.com"
+  domain = "docker.local"
 
   prefix = "traefik"
 

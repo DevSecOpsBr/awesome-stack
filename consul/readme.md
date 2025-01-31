@@ -56,10 +56,10 @@ You don't need restart you server(s) or client(s) even the registrator because i
 bash acl_consul.sh create_agent_token
 ```
 
-After the script finish just use the MASTER_TOKEN to access your consul via broswer. Remember I am using traefik so you need edit your hosts file and add consul.ellesmera.com there pointing to localhost.
+After the script finish just use the MASTER_TOKEN to access your consul via broswer. Remember I am using traefik so you need edit your hosts file and add consul.docker.local there pointing to localhost.
 
 2. Accessing UI
 
 ```(text)
-http://consul.ellesmera.com
+http://consul.docker.local
 ```

@@ -27,4 +27,4 @@
   passTLSCert = true
   priority = 20
     [frontends.vault.routes.server_1]
-      rule = "Host:vault.ellesmera.com"
+      rule = "Host:vault.docker.local"

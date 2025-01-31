@@ -31,7 +31,7 @@
   passTLSCert = true
   priority = 10
     [frontends.portal2.routes.portal2]
-        rule = "HostRegexp:{subdomain:[a-z]+}.ellesmera.com"
+        rule = "HostRegexp:{subdomain:[a-z]+}.docker.local"
     [frontends.portal2.errors]
         [frontends.portal2.errors.errorPage0]
         status = ["500-599"]

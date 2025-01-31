@@ -45,4 +45,4 @@ telemetry:
   prefix: linkerd_prod
 
 usage:
-  orgId: ellesmera.com
+  orgId: docker.local

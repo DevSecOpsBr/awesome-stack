@@ -34,7 +34,7 @@ services:
       - DRONE_BITBUCKET_CLIENT_SECRET=${DRONE_BITBUCKET_CLIENT_SECRET}
       # PostgreSQL credentials
       - DRONE_DATABASE_DRIVER=postgres
-      - DRONE_DATABASE_DATASOURCE=postgres://root:${DOCKER_SECRET_ALL_IN_ONE}@db_postgres:5432/drone_bitbucket?sslmode=disable
+      - DRONE_DATABASE_DATASOURCE=postgres://root:${DOCKER_SECRET_DB}@db_postgres:5432/drone_bitbucket?sslmode=disable
     env_file:
       - ./.env/bitbucket.env
     restart: always
@@ -75,7 +75,7 @@ services:
       - DRONE_GITHUB_CLIENT_SECRET=${DRONE_GITHUB_CLIENT_SECRET}
       # PostgreSQL credentials
       - DRONE_DATABASE_DRIVER=postgres
-      - DRONE_DATABASE_DATASOURCE=postgres://root:${DOCKER_SECRET_ALL_IN_ONE}@db_postgres:5432/drone_github?sslmode=disable
+      - DRONE_DATABASE_DATASOURCE=postgres://root:${DOCKER_SECRET_DB}@db_postgres:5432/drone_github?sslmode=disable
     env_file:
       - ./.env/github.env
     restart: always

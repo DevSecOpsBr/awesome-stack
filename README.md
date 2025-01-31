@@ -15,6 +15,20 @@ The main goal is to show the best practices and try create a stable and realiabl
 
 * Once you have met all the above requisites move forward to documentation section
 
+### Setup
+
+Run below command to setup local environment with a docker swarm cluster, docker network, docker secret and deploy essential stack(s).
+
+```sh
+make all
+```
+
+For DevOps tools run bellow command to deploy all stacks defined in `DEVOPS` variable.
+
+```sh
+make devops-stack
+```
+
 ### Documentation
 
 ---
@@ -29,7 +43,7 @@ My stack list is described below. I am often adding new stack to it and also tes
 
 * concourse
 * consul
-* databases
+* db
 * droneci
 * elastic
 * flask

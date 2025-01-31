@@ -51,7 +51,7 @@ secrets:
 # Define the stacks to be deployed
 
 # Deploy multiple stacks, dynamically finding the correct YAML file
-deploy: devops-stack
+deploy: ps
 	@for stack in $(STACKS); do \
 	  FILE=$$(find $$stack -maxdepth 1 -type f \( -name "*.yml" -o -name "*.yaml" \) | head -n 1); \
 	  if [ -n "$$FILE" ]; then \

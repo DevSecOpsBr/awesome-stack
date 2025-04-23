@@ -65,6 +65,7 @@ droneci/.secrets/*.env
 webhookrelay/.env/*.env
 
 # Ngrok
+ngrok/configs/*
 ngrok/.secrets/*.env
 
 # Databases

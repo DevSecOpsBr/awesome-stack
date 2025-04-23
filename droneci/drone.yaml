@@ -28,7 +28,7 @@ services:
           memory: 500M
     environment:
       # Drone server settings
-      - DRONE_SERVER_HOST=${TRAEFIK_HUB_BB}
+      - DRONE_SERVER_HOST=${NGROK_DOMAIN_BITBUCKET}
       # Bitbucket credentials
       - DRONE_BITBUCKET_CLIENT_ID=${DRONE_BITBUCKET_CLIENT_ID}
       - DRONE_BITBUCKET_CLIENT_SECRET=${DRONE_BITBUCKET_CLIENT_SECRET}

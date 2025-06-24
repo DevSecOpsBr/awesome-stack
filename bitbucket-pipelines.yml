@@ -20,5 +20,5 @@ pipelines:
             lfs: false
             depth: 5
           script:
-            - git push --all --porcelain --thin --progress --force git@github.com:DevSecOpsBr/docker.git
-            - git push --all --porcelain --thin --progress --force git@gitlab.com:devsecopsbr1/docker.git
+            - git push --all --porcelain --thin --progress --force git@github.com:DevSecOpsBr/awesome-stack.git || echo "Failed to push to GitHub, continuing with GitLab"
+            - git push --all --porcelain --thin --progress --force git@gitlab.com:devsecopsbr1/docker.git || echo "Failed to push to GitLab, continuing with Bitbucket"

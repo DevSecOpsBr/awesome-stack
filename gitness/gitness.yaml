@@ -31,9 +31,9 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - gitness-data:/data
     environment:
-      - GITNESS_URL_BASE=http://harness.docker.local
+      - GITNESS_URL_BASE=http://gitness.docker.local
       # Gitness admin credentials
-      - GITNESS_PRINCIPAL_ADMIN_PASSWORD=admin12345
+      - GITNESS_PRINCIPAL_ADMIN_PASSWORD=${DOCKER_SECRET_DB}
       # Postgres credentials settings
       - GITNESS_DATABASE_DRIVER=postgres
       - GITNESS_DATABASE_DATASOURCE=postgres://root:${DOCKER_SECRET_DB}@db_postgres:5432/gitness?sslmode=disable
